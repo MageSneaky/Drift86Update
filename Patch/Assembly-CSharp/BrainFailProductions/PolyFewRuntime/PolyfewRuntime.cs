@@ -49,7 +49,7 @@ namespace BrainFailProductions.PolyFewRuntime
 			{
 				flag = true;
 			}
-			if (Application.platform == RuntimePlatform.WebGLPlayer)
+			if (Application.platform == 17)
 			{
 				flag = false;
 			}
@@ -388,7 +388,7 @@ namespace BrainFailProductions.PolyFewRuntime
 			{
 				flag = true;
 			}
-			if (Application.platform == RuntimePlatform.WebGLPlayer)
+			if (Application.platform == 17)
 			{
 				flag = false;
 			}
@@ -681,7 +681,7 @@ namespace BrainFailProductions.PolyFewRuntime
 			{
 				flag = true;
 			}
-			if (Application.platform == RuntimePlatform.WebGLPlayer)
+			if (Application.platform == 17)
 			{
 				flag = false;
 			}
@@ -1747,7 +1747,7 @@ namespace BrainFailProductions.PolyFewRuntime
 			{
 				if (this.mesh != null)
 				{
-					UnityEngine.Object.DestroyImmediate(this.mesh);
+					Object.DestroyImmediate(this.mesh);
 				}
 			}
 

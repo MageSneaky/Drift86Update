@@ -9,10 +9,17 @@ public static class PlayerProfile
 	{
 		get
 		{
+			if (PlayerPrefs.HasKey("DisplayName"))
+			{
+				Debug.Log("Used Display Name: " + PlayerPrefs.GetString("DisplayName"));
+				return PlayerPrefs.GetString("DisplayName");
+			}
 			if (!PlayerPrefs.HasKey("nn"))
 			{
-				PlayerPrefs.SetString("nn", string.Format("Player {0}", UnityEngine.Random.Range(0, 99999)));
+				Debug.Log("Created nn");
+				PlayerPrefs.SetString("nn", string.Format("Player {0}", Random.Range(0, 99999)));
 			}
+			Debug.Log("Used nn");
 			return PlayerPrefs.GetString("nn");
 		}
 		set

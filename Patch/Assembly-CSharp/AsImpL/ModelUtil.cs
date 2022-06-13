@@ -61,7 +61,7 @@ namespace AsImpL
 
 		public static bool ScanTransparentPixels(Texture2D texture, ref ModelUtil.MtlBlendMode mode)
 		{
-			if (texture != null && (texture.format == TextureFormat.ARGB32 || texture.format == TextureFormat.RGBA32 || texture.format == TextureFormat.DXT5 || texture.format == TextureFormat.ARGB4444 || texture.format == TextureFormat.BGRA32 || texture.format == TextureFormat.DXT5Crunched))
+			if (texture != null && (texture.format == 5 || texture.format == 4 || texture.format == 12 || texture.format == 2 || texture.format == 14 || texture.format == 29))
 			{
 				bool flag = false;
 				int num = 1;
@@ -109,7 +109,7 @@ namespace AsImpL
 		{
 			int height = bumpMap.height;
 			int width = bumpMap.width;
-			Texture2D texture2D = new Texture2D(width, height, TextureFormat.ARGB32, true);
+			Texture2D texture2D = new Texture2D(width, height, 5, true);
 			Color black = Color.black;
 			for (int i = 0; i < bumpMap.height; i++)
 			{

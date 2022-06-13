@@ -12,7 +12,7 @@ namespace BrainFailProductions.PolyFewRuntime
 	{
 		public static Texture2D DuplicateTexture(Texture2D source)
 		{
-			RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+			RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.height, 0, 7, 1);
 			Graphics.Blit(source, temporary);
 			RenderTexture active = RenderTexture.active;
 			RenderTexture.active = temporary;
@@ -210,7 +210,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
 			public void ExportGameObjectToOBJ(GameObject toExport, string exportPath, PolyfewRuntime.OBJExportOptions exportOptions = null, Action OnSuccess = null)
 			{
-				if (Application.platform == RuntimePlatform.WebGLPlayer)
+				if (Application.platform == 17)
 				{
 					Debug.LogWarning("The function cannot run on WebGL player. As web apps cannot read from or write to local file system.");
 					return;
@@ -487,9 +487,9 @@ namespace BrainFailProductions.PolyFewRuntime
 						pixels = t.GetPixels32();
 					}
 					string text = Path.Combine(exportPath, name + ".png");
-					Texture2D texture2D = new Texture2D(t.width, t.height, TextureFormat.ARGB32, false);
+					Texture2D texture2D = new Texture2D(t.width, t.height, 5, false);
 					texture2D.SetPixels32(pixels);
-					File.WriteAllBytes(text, texture2D.EncodeToPNG());
+					File.WriteAllBytes(text, ImageConversion.EncodeToPNG(texture2D));
 					result = text;
 				}
 				catch (Exception)
@@ -580,7 +580,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
 			public async Task ImportFromLocalFileSystem(string objPath, string texturesFolderPath, string materialsFolderPath, Action<GameObject> Callback, PolyfewRuntime.OBJImportOptions importOptions = null)
 			{
-				if (Application.platform == RuntimePlatform.WebGLPlayer)
+				if (Application.platform == 17)
 				{
 					Debug.LogWarning("The function cannot run on WebGL player. As web apps cannot read from or write to local file system.");
 				}
@@ -656,7 +656,7 @@ namespace BrainFailProductions.PolyFewRuntime
 						'.'
 					})[1].ToLower() != "obj")
 					{
-						UnityEngine.Object.DestroyImmediate(objectToPopulate);
+						Object.DestroyImmediate(objectToPopulate);
 						throw new InvalidOperationException("The path provided must point to a wavefront obj file.");
 					}
 					if (importOptions == null)
@@ -666,12 +666,12 @@ namespace BrainFailProductions.PolyFewRuntime
 					try
 					{
 						GameObject obj = await objImporter.ImportModelAsync(objName, objPath, null, importOptions, texturesFolderPath, materialsFolderPath);
-						UnityEngine.Object.Destroy(objImporter);
+						Object.Destroy(objImporter);
 						Callback(obj);
 					}
 					catch (Exception ex)
 					{
-						UnityEngine.Object.DestroyImmediate(objectToPopulate);
+						Object.DestroyImmediate(objectToPopulate);
 						throw ex;
 					}
 				}
@@ -705,12 +705,12 @@ namespace BrainFailProductions.PolyFewRuntime
 				try
 				{
 					GameObject obj = await objImporter.ImportModelFromNetwork(objURL, objName, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, downloadProgress, importOptions);
-					UnityEngine.Object.Destroy(objImporter);
+					Object.Destroy(objImporter);
 					OnSuccess(obj);
 				}
 				catch (Exception obj2)
 				{
-					UnityEngine.Object.DestroyImmediate(objectToPopulate);
+					Object.DestroyImmediate(objectToPopulate);
 					OnError(obj2);
 				}
 			}
@@ -746,11 +746,11 @@ namespace BrainFailProductions.PolyFewRuntime
 						}
 						objImporter.ImportModelFromNetworkWebGL(objURL, objName, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, downloadProgress, importOptions, delegate(GameObject imported)
 						{
-							UnityEngine.Object.Destroy(objImporter);
+							Object.Destroy(objImporter);
 							OnSuccess(imported);
 						}, delegate(Exception exception)
 						{
-							UnityEngine.Object.DestroyImmediate(objectToPopulate);
+							Object.DestroyImmediate(objectToPopulate);
 							OnError(exception);
 						});
 					}

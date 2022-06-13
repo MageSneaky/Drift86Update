@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 
 public static class GameOptions
 {
-	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+	[RuntimeInitializeOnLoadMethod(0)]
 	private static void OnLoadScene()
 	{
 		GameOptions.UpdateAudioMixer();

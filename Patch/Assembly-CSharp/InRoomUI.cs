@@ -76,7 +76,7 @@ public class InRoomUI : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 		this.OnRoomPropertiesUpdate(this.CurrentRoom.CustomProperties);
 		foreach (KeyValuePair<Player, PlayerItemInRoomUI> keyValuePair in this.Players)
 		{
-			UnityEngine.Object.Destroy(keyValuePair.Value.gameObject);
+			Object.Destroy(keyValuePair.Value.gameObject);
 		}
 		this.Players.Clear();
 		foreach (KeyValuePair<int, Player> keyValuePair2 in this.CurrentRoom.Players)
@@ -158,7 +158,7 @@ public class InRoomUI : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 		PlayerItemInRoomUI playerItemInRoomUI = null;
 		if (!this.Players.TryGetValue(targetPlayer, out playerItemInRoomUI))
 		{
-			playerItemInRoomUI = UnityEngine.Object.Instantiate<PlayerItemInRoomUI>(this.PlayerItemUIRef, this.PlayerItemUIRef.transform.parent);
+			playerItemInRoomUI = Object.Instantiate<PlayerItemInRoomUI>(this.PlayerItemUIRef, this.PlayerItemUIRef.transform.parent);
 			this.Players.Add(targetPlayer, playerItemInRoomUI);
 		}
 		Hashtable customProperties = targetPlayer.CustomProperties;
@@ -220,7 +220,7 @@ public class InRoomUI : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 				}
 				PhotonNetwork.RaiseEvent(0, null, new RaiseEventOptions
 				{
-					Receivers = ReceiverGroup.All
+					Receivers = 1
 				}, SendOptions.SendReliable);
 				this.WaitStartGame = true;
 			}
@@ -231,7 +231,7 @@ public class InRoomUI : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 	{
 		foreach (KeyValuePair<Player, PlayerItemInRoomUI> keyValuePair in this.Players)
 		{
-			UnityEngine.Object.Destroy(keyValuePair.Value.gameObject);
+			Object.Destroy(keyValuePair.Value.gameObject);
 		}
 		this.Players.Clear();
 	}
@@ -260,7 +260,7 @@ public class InRoomUI : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 	{
 		if (this.Players.ContainsKey(otherPlayer))
 		{
-			UnityEngine.Object.Destroy(this.Players[otherPlayer].gameObject);
+			Object.Destroy(this.Players[otherPlayer].gameObject);
 			this.Players.Remove(otherPlayer);
 		}
 		this.UpdateCustomProperties();

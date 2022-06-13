@@ -9,10 +9,10 @@ public class SoundControllerInUI : MonoBehaviour
 		if (SoundControllerInUI.Instance == null)
 		{
 			SoundControllerInUI.Instance = this;
-			UnityEngine.Object.DontDestroyOnLoad(this);
+			Object.DontDestroyOnLoad(this);
 			return;
 		}
-		UnityEngine.Object.Destroy(base.gameObject);
+		Object.Destroy(base.gameObject);
 	}
 
 	private void Play(AudioClip clip)
@@ -28,7 +28,7 @@ public class SoundControllerInUI : MonoBehaviour
 		}
 		if (audioSource == null)
 		{
-			audioSource = UnityEngine.Object.Instantiate<AudioSource>(this.SourceRef, base.transform);
+			audioSource = Object.Instantiate<AudioSource>(this.SourceRef, base.transform);
 			audioSource.priority = 8 * this.SourcePool.Count;
 			this.SourcePool.Add(audioSource);
 		}
@@ -52,7 +52,7 @@ public class SoundControllerInUI : MonoBehaviour
 	{
 		if (SoundControllerInUI.Instance == null)
 		{
-			UnityEngine.Object.Instantiate<SoundControllerInUI>(B.ResourcesSettings.SoundControllerInUI);
+			Object.Instantiate<SoundControllerInUI>(B.ResourcesSettings.SoundControllerInUI);
 		}
 	}
 

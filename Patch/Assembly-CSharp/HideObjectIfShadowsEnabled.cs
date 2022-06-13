@@ -16,6 +16,6 @@ public class HideObjectIfShadowsEnabled : MonoBehaviour
 
 	private void OnQualityChanged()
 	{
-		base.gameObject.SetActive(QualitySettings.shadows == ShadowQuality.Disable);
+		base.gameObject.SetActive(QualitySettings.shadows == 0);
 	}
 }

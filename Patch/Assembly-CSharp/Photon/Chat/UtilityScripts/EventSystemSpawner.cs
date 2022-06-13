@@ -8,7 +8,7 @@ namespace Photon.Chat.UtilityScripts
 	{
 		private void Start()
 		{
-			if (UnityEngine.Object.FindObjectOfType<EventSystem>() == null)
+			if (Object.FindObjectOfType<EventSystem>() == null)
 			{
 				GameObject gameObject = new GameObject("EventSystem");
 				gameObject.AddComponent<EventSystem>();

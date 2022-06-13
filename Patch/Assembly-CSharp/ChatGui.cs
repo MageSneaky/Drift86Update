@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Chat;
@@ -13,7 +14,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 
 	public void Start()
 	{
-		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
+		Object.DontDestroyOnLoad(base.gameObject);
 		this.stopsendmsg = 0;
 		this.UserIdText.text = "";
 		this.StateText.text = "";
@@ -39,7 +40,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 	public void Connect()
 	{
 		this.UserIdFormPanel.gameObject.SetActive(false);
-		this.chatClient = new ChatClient(this, ConnectionProtocol.Udp);
+		this.chatClient = new ChatClient(this, 0);
 		if (PlayerPrefs.GetString("Settings_MyRegion") == "sa")
 		{
 			this.chatClient.ChatRegion = "us";
@@ -49,7 +50,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 			this.chatClient.ChatRegion = PlayerPrefs.GetString("Settings_MyRegion");
 		}
 		this.chatClient.UseBackgroundWorkerForSending = true;
-		this.chatClient.Connect(this.chatAppSettings.AppIdChat, "1.0", new Photon.Chat.AuthenticationValues(this.UserName));
+		this.chatClient.Connect(this.chatAppSettings.AppIdChat, "1.0", new AuthenticationValues(this.UserName));
 		this.ChannelToggleToInstantiate.gameObject.SetActive(false);
 		Debug.Log("Connecting as: " + this.UserName);
 		this.ConnectingLabel.SetActive(true);
@@ -79,15 +80,21 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 		}
 		if (this.StateText == null)
 		{
-			UnityEngine.Object.Destroy(base.gameObject);
+			Object.Destroy(base.gameObject);
 			return;
 		}
 		this.StateText.gameObject.SetActive(this.ShowState);
+		if (this.InputFieldChat.isFocused)
+		{
+			SneakyManager.SetChat(true);
+			return;
+		}
+		SneakyManager.SetChat(false);
 	}
 
 	public void OnEnterSend()
 	{
-		if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+		if (Input.GetKey(13) || Input.GetKey(271))
 		{
 			this.SendChatMessage(this.InputFieldChat.text);
 			this.InputFieldChat.text = "";
@@ -118,10 +125,10 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 			this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, this.testBytes, true);
 		}
 		bool flag = this.chatClient.PrivateChannels.ContainsKey(this.selectedChannelName);
-		string target = string.Empty;
+		string text = string.Empty;
 		if (flag)
 		{
-			target = this.selectedChannelName.Split(new char[]
+			text = this.selectedChannelName.Split(new char[]
 			{
 				':'
 			})[1];
@@ -183,7 +190,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 					return;
 				}
 				ChatChannel chatChannel;
-				if (this.chatClient.TryGetChannel(this.selectedChannelName, flag, out chatChannel))
+				if (this.chatClient.TryGetChannel(this.selectedChannelName, flag, ref chatChannel))
 				{
 					chatChannel.ClearMessages();
 					return;
@@ -200,9 +207,9 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 				{
 					return;
 				}
-				string target2 = array3[0];
-				string message = array3[1];
-				this.chatClient.SendPrivateMessage(target2, message, false);
+				string text2 = array3[0];
+				string text3 = array3[1];
+				this.chatClient.SendPrivateMessage(text2, text3, false);
 				return;
 			}
 			else
@@ -233,7 +240,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 		{
 			if (flag)
 			{
-				this.chatClient.SendPrivateMessage(target, inputLine, false);
+				this.chatClient.SendPrivateMessage(text, inputLine, false);
 				return;
 			}
 			this.chatClient.PublishMessage(this.selectedChannelName, inputLine, false);
@@ -248,12 +255,12 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 
 	public void DebugReturn(DebugLevel level, string message)
 	{
-		if (level == DebugLevel.ERROR)
+		if (level == 1)
 		{
 			Debug.LogError(message);
 			return;
 		}
-		if (level == DebugLevel.WARNING)
+		if (level == 2)
 		{
 			Debug.LogWarning(message);
 			return;
@@ -300,16 +307,16 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 
 	public void OnSubscribed(string[] channels, bool[] results)
 	{
-		foreach (string channelName in channels)
+		foreach (string text in channels)
 		{
 			if (this.stopsendmsg == 0)
 			{
-				this.chatClient.PublishMessage(channelName, "says 'hi'.", false);
+				this.chatClient.PublishMessage(text, "says 'hi'.", false);
 			}
 			this.stopsendmsg = 1;
 			if (this.ChannelToggleToInstantiate != null)
 			{
-				this.InstantiateChannelButton(channelName);
+				this.InstantiateChannelButton(text);
 			}
 		}
 		this.ShowChannel(channels[0]);
@@ -322,7 +329,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 			Debug.Log("Skipping creation for an existing channel toggle.");
 			return;
 		}
-		Toggle toggle = UnityEngine.Object.Instantiate<Toggle>(this.ChannelToggleToInstantiate);
+		Toggle toggle = Object.Instantiate<Toggle>(this.ChannelToggleToInstantiate);
 		toggle.gameObject.SetActive(true);
 		toggle.GetComponentInChildren<ChannelSelector>().SetChannel(channelName);
 		toggle.transform.SetParent(this.ChannelToggleToInstantiate.transform.parent, false);
@@ -331,7 +338,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 
 	private void InstantiateFriendButton(string friendId)
 	{
-		GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.FriendListUiItemtoInstantiate);
+		GameObject gameObject = Object.Instantiate<GameObject>(this.FriendListUiItemtoInstantiate);
 		gameObject.gameObject.SetActive(true);
 		FriendItem component = gameObject.GetComponent<FriendItem>();
 		component.FriendId = friendId;
@@ -345,16 +352,16 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 		{
 			if (this.channelToggles.ContainsKey(text))
 			{
-				UnityEngine.Object.Destroy(this.channelToggles[text].gameObject);
+				Object.Destroy(this.channelToggles[text].gameObject);
 				this.channelToggles.Remove(text);
 				Debug.Log("Unsubscribed from channel '" + text + "'.");
 				if (text == this.selectedChannelName && this.channelToggles.Count > 0)
 				{
-					IEnumerator<KeyValuePair<string, Toggle>> enumerator = this.channelToggles.GetEnumerator();
-					enumerator.MoveNext();
-					KeyValuePair<string, Toggle> keyValuePair = enumerator.Current;
+					object obj = this.channelToggles.GetEnumerator();
+					((IEnumerator)obj).MoveNext();
+					KeyValuePair<string, Toggle> keyValuePair = ((IEnumerator<KeyValuePair<string, Toggle>>)obj).Current;
 					this.ShowChannel(keyValuePair.Key);
-					keyValuePair = enumerator.Current;
+					keyValuePair = ((IEnumerator<KeyValuePair<string, Toggle>>)obj).Current;
 					keyValuePair.Value.isOn = true;
 				}
 			}
@@ -421,7 +428,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 	public void AddMessageToSelectedChannel(string msg)
 	{
 		ChatChannel chatChannel = null;
-		if (!this.chatClient.TryGetChannel(this.selectedChannelName, out chatChannel))
+		if (!this.chatClient.TryGetChannel(this.selectedChannelName, ref chatChannel))
 		{
 			Debug.Log("AddMessageToSelectedChannel failed to find channel: " + this.selectedChannelName);
 			return;
@@ -439,7 +446,7 @@ public class ChatGui : MonoBehaviour, IChatClientListener
 			return;
 		}
 		ChatChannel chatChannel = null;
-		if (!this.chatClient.TryGetChannel(channelName, out chatChannel))
+		if (!this.chatClient.TryGetChannel(channelName, ref chatChannel))
 		{
 			Debug.Log("ShowChannel failed to find channel: " + channelName);
 			return;

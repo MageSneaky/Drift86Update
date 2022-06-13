@@ -11,7 +11,6 @@ using Photon.Realtime;
 using Steamworks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallback
 {
@@ -83,7 +82,7 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 		{
 			this.m_GameIsEnded = true;
 		}));
-		foreach (CarController carController in UnityEngine.Object.FindObjectsOfType<CarController>())
+		foreach (CarController carController in Object.FindObjectsOfType<CarController>())
 		{
 			if (carController.GetComponent<UserControl>() != null)
 			{
@@ -107,12 +106,12 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 			AudioListener component = carController2.GetComponent<AudioListener>();
 			if (component != null)
 			{
-				UnityEngine.Object.Destroy(component);
+				Object.Destroy(component);
 			}
 		}
 		this.m_AllCars.ForEach(delegate(CarController c)
 		{
-			UnityEngine.Object.Destroy(c.gameObject);
+			Object.Destroy(c.gameObject);
 		});
 		this.m_AllCars.Clear();
 		this.InitRaceEntity();
@@ -153,7 +152,7 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 			yield return null;
 		}
 		Debug.Log("2222222222 START RACE COROUTINE");
-		UnityEngine.Object.Instantiate<GameObject>(this.CountdownObject).SetActive(true);
+		Object.Instantiate<GameObject>(this.CountdownObject).SetActive(true);
 		Debug.Log("2222222222 START RACE COROUTINE");
 		yield return new WaitForSeconds(this.CountdownTime);
 		this.OnStartRaceAction.SafeInvoke();
@@ -169,9 +168,9 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 
 	public void SetAchivement()
 	{
-		if (UnityEngine.Object.FindObjectOfType<UserControl>())
+		if (Object.FindObjectOfType<UserControl>())
 		{
-			SteamUserStats.SetAchievement(UnityEngine.Object.FindObjectOfType<UserControl>().gameObject.transform.name.Split(new char[]
+			SteamUserStats.SetAchievement(Object.FindObjectOfType<UserControl>().gameObject.transform.name.Split(new char[]
 			{
 				'('
 			})[0]);
@@ -226,7 +225,7 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 	{
 		PhotonNetwork.RaiseEvent(1, null, new RaiseEventOptions
 		{
-			Receivers = ReceiverGroup.All
+			Receivers = 1
 		}, SendOptions.SendReliable);
 	}
 
@@ -250,7 +249,7 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 	private IEnumerator StartFinishRaceTimer()
 	{
 		int timer = B.MultiplayerSettings.SecondsToEndGame;
-		GameObject endGameTimerHolder = UnityEngine.Object.Instantiate<GameObject>(this.EndGameTimerHolder);
+		GameObject endGameTimerHolder = Object.Instantiate<GameObject>(this.EndGameTimerHolder);
 		endGameTimerHolder.SetActive(true);
 		TextMeshProUGUI endGameTimerText = endGameTimerHolder.GetComponentInChildren<TextMeshProUGUI>();
 		while (timer >= 0)
@@ -294,7 +293,7 @@ public class GameControllerPersistant : MonoBehaviourPunCallbacks, IOnEventCallb
 	{
 		Action action = delegate()
 		{
-			LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, LoadSceneMode.Single);
+			LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, 0);
 		};
 		B.MultiplayerSettings.ShowDisconnectCause(cause, null);
 	}

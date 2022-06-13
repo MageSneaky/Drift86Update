@@ -46,21 +46,21 @@ public class MultiplayerCarController : MonoBehaviourPunCallbacks, IPunObservabl
 	{
 		if (!WorldLoading.HasLoadingParams || !GameController.InGameScene)
 		{
-			UnityEngine.Object.Destroy(this.PhotonView);
-			UnityEngine.Object.Destroy(this);
+			Object.Destroy(this.PhotonView);
+			Object.Destroy(this);
 			return;
 		}
 		this.PhotonView = base.GetComponent<PhotonView>();
 		if (this.PhotonView == null)
 		{
 			Debug.LogError("GameObject without PhotonView");
-			UnityEngine.Object.Destroy(this);
+			Object.Destroy(this);
 			return;
 		}
 		if (!WorldLoading.IsMultiplayer || !WorldLoading.HasLoadingParams)
 		{
-			UnityEngine.Object.Destroy(this.PhotonView);
-			UnityEngine.Object.Destroy(this);
+			Object.Destroy(this.PhotonView);
+			Object.Destroy(this);
 			return;
 		}
 		this.Car = base.GetComponent<CarController>();
@@ -92,7 +92,7 @@ public class MultiplayerCarController : MonoBehaviourPunCallbacks, IPunObservabl
 		this.StartRaceRegime();
 		this.SqrDistanceFastLerp = B.MultiplayerSettings.DistanceFastSync * B.MultiplayerSettings.DistanceFastSync;
 		this.SqrDistanceTeleport = B.MultiplayerSettings.DistanceTeleport * B.MultiplayerSettings.DistanceTeleport;
-		this.NickNameText = UnityEngine.Object.Instantiate<TextMeshPro>(B.MultiplayerSettings.NickNameInWorld, base.transform);
+		this.NickNameText = Object.Instantiate<TextMeshPro>(B.MultiplayerSettings.NickNameInWorld, base.transform);
 		this.NickNameText.text = this.PhotonView.Owner.NickName;
 		this.NickNameText.transform.SetLocalY(B.MultiplayerSettings.NickNameY);
 		if (PhotonNetwork.CurrentRoom.Players.ContainsValue(this.PhotonView.Owner))
@@ -119,7 +119,7 @@ public class MultiplayerCarController : MonoBehaviourPunCallbacks, IPunObservabl
 	{
 		if (this.IsMine && this.StatisticsDrift != null)
 		{
-			this.PhotonView.RPC("UpdateTotalScore", RpcTarget.Others, new object[]
+			this.PhotonView.RPC("UpdateTotalScore", 1, new object[]
 			{
 				this.StatisticsDrift.TotalScore
 			});
@@ -150,7 +150,7 @@ public class MultiplayerCarController : MonoBehaviourPunCallbacks, IPunObservabl
 	{
 		if (this.IsMine && this.StatisticsRace != null)
 		{
-			this.PhotonView.RPC("RPCOnFinishRace", RpcTarget.Others, new object[]
+			this.PhotonView.RPC("RPCOnFinishRace", 1, new object[]
 			{
 				this.StatisticsRace.TotalRaceTime
 			});

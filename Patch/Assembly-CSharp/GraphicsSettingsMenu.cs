@@ -138,19 +138,19 @@ public class GraphicsSettingsMenu : MonoBehaviour
 		switch (Mathf.RoundToInt(this.shadowResolutionSlider.value))
 		{
 		case 0:
-			QualitySettings.shadowResolution = ShadowResolution.Low;
+			QualitySettings.shadowResolution = 0;
 			this.shadowText.text = "Low";
 			return;
 		case 1:
-			QualitySettings.shadowResolution = ShadowResolution.Medium;
+			QualitySettings.shadowResolution = 1;
 			this.shadowText.text = "Medium";
 			return;
 		case 2:
-			QualitySettings.shadowResolution = ShadowResolution.High;
+			QualitySettings.shadowResolution = 2;
 			this.shadowText.text = "High";
 			return;
 		case 3:
-			QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
+			QualitySettings.shadowResolution = 3;
 			this.shadowText.text = "Ultra";
 			return;
 		default:
@@ -186,15 +186,15 @@ public class GraphicsSettingsMenu : MonoBehaviour
 		switch (Mathf.RoundToInt(this.anisotropicModeSlider.value))
 		{
 		case 0:
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+			QualitySettings.anisotropicFiltering = 0;
 			this.anisotropicModeText.text = "Disabled";
 			return;
 		case 1:
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+			QualitySettings.anisotropicFiltering = 1;
 			this.anisotropicModeText.text = "Enabled";
 			return;
 		case 2:
-			QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+			QualitySettings.anisotropicFiltering = 2;
 			this.anisotropicModeText.text = "ForceEnabled";
 			return;
 		default:
@@ -218,7 +218,7 @@ public class GraphicsSettingsMenu : MonoBehaviour
 		{
 			if (this.resolutions[i].width != num && this.resolutions[i].height != num2)
 			{
-				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.resButtonPrefab);
+				GameObject gameObject = Object.Instantiate<GameObject>(this.resButtonPrefab);
 				gameObject.GetComponentInChildren<Text>().text = this.resolutions[i].width + "x" + this.resolutions[i].height;
 				int index = i;
 				gameObject.GetComponent<Button>().onClick.AddListener(delegate()
@@ -266,34 +266,34 @@ public class GraphicsSettingsMenu : MonoBehaviour
 			PlayerPrefs.SetInt("anisotropicLevelSlider", Mathf.RoundToInt(this.anisotropicLevelSlider.value));
 			PlayerPrefs.SetInt("wantedResolutionX", this.wantedResX);
 			PlayerPrefs.SetInt("wantedResolutionY", this.wantedResY);
-			int value;
+			int num;
 			if (!this.showFPS)
 			{
-				value = 0;
+				num = 0;
 			}
 			else
 			{
-				value = 1;
+				num = 1;
 			}
-			PlayerPrefs.SetInt("FPSToggle", value);
+			PlayerPrefs.SetInt("FPSToggle", num);
 			if (this.vSyncToggle.isOn)
 			{
-				value = 1;
+				num = 1;
 			}
 			else
 			{
-				value = 0;
+				num = 0;
 			}
-			PlayerPrefs.SetInt("vSyncToggle", value);
+			PlayerPrefs.SetInt("vSyncToggle", num);
 			if (this.windowedModeToggle.isOn)
 			{
-				value = 1;
+				num = 1;
 			}
 			else
 			{
-				value = 0;
+				num = 0;
 			}
-			PlayerPrefs.SetInt("windowedModeToggle", value);
+			PlayerPrefs.SetInt("windowedModeToggle", num);
 			return;
 		}
 		if (this.saveAs == GraphicsSettingsMenu.saveFormat.iniFile)
@@ -327,8 +327,8 @@ public class GraphicsSettingsMenu : MonoBehaviour
 			{
 				if (File.Exists(this.saveFileDataPath))
 				{
-					string json = File.ReadAllText(this.saveFileDataPath);
-					this.saveVars = JsonUtility.FromJson<GraphicsSettingsMenu.MenuVariables>(json);
+					string text = File.ReadAllText(this.saveFileDataPath);
+					this.saveVars = JsonUtility.FromJson<GraphicsSettingsMenu.MenuVariables>(text);
 					this.qualityLevelSlider.value = (float)this.saveVars.Qualitylevel;
 					this.antiAliasSlider.value = (float)this.saveVars.AntiAliaslevel;
 					this.anisotropicModeSlider.value = (float)this.saveVars.AnisotropicMode;

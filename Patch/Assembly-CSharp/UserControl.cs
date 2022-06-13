@@ -45,7 +45,7 @@ public class UserControl : MonoBehaviour, ICarControl
 				this.Vertical = Input.GetAxis("Vertical");
 				this.Brake = Input.GetButton("Jump");
 			}
-			if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+			if ((Input.GetKeyDown(114) && !SneakyManager.GetChat()) || Input.GetKeyDown(353))
 			{
 				this.ControlledCar.ResetPosition();
 			}

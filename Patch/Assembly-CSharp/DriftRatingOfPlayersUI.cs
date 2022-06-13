@@ -28,7 +28,7 @@ public class DriftRatingOfPlayersUI : MonoBehaviour
 		if (this.DriftRaceEntity == null)
 		{
 			Debug.LogError("The RaceEntity is not DriftRaceEntity");
-			UnityEngine.Object.Destroy(this);
+			Object.Destroy(this);
 			return;
 		}
 		if (this.AllCars.Count <= 1 && !WorldLoading.IsMultiplayer)
@@ -54,7 +54,7 @@ public class DriftRatingOfPlayersUI : MonoBehaviour
 		{
 			if (!this.PanelCarStatisticsDict.ContainsKey(key))
 			{
-				DriftRatingPlayerUI driftRatingPlayerUI = UnityEngine.Object.Instantiate<DriftRatingPlayerUI>(this.PlayerUIRef, this.PlayerUIRef.transform.parent);
+				DriftRatingPlayerUI driftRatingPlayerUI = Object.Instantiate<DriftRatingPlayerUI>(this.PlayerUIRef, this.PlayerUIRef.transform.parent);
 				driftRatingPlayerUI.SetActive(true);
 				this.PanelCarStatisticsDict.Add(key, driftRatingPlayerUI);
 			}

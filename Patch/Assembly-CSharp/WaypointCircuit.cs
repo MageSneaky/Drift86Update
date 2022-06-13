@@ -127,23 +127,23 @@ public class WaypointCircuit : MonoBehaviour
 			this.CachePositionsAndDistances();
 			this.Length = this.Distances[this.Distances.Count - 1];
 			Gizmos.color = (selected ? Color.yellow : new Color(1f, 1f, 0f, 0.5f));
-			Vector3 from = this.Waypoints[0].position;
+			Vector3 vector = this.Waypoints[0].position;
 			if (this.m_SmoothRoute)
 			{
 				for (float num = 0f; num < this.Length; num += this.Length / this.EditorVisualisationSubsteps)
 				{
 					Vector3 routePosition = this.GetRoutePosition(num + 1f);
-					Gizmos.DrawLine(from, routePosition);
-					from = routePosition;
+					Gizmos.DrawLine(vector, routePosition);
+					vector = routePosition;
 				}
-				Gizmos.DrawLine(from, this.Waypoints[0].position);
+				Gizmos.DrawLine(vector, this.Waypoints[0].position);
 				return;
 			}
 			for (int i = 0; i < this.Waypoints.Count; i++)
 			{
 				Vector3 position = this.Waypoints[(i + 1) % this.Waypoints.Count].position;
-				Gizmos.DrawLine(from, position);
-				from = position;
+				Gizmos.DrawLine(vector, position);
+				vector = position;
 			}
 		}
 	}

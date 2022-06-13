@@ -13,12 +13,12 @@ public class ChannelSelector : MonoBehaviour, IPointerClickHandler, IEventSystem
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		UnityEngine.Object.FindObjectOfType<ChatGui>().ShowChannel(this.Channel);
+		Object.FindObjectOfType<ChatGui>().ShowChannel(this.Channel);
 	}
 
 	public void OnPointerClick()
 	{
-		UnityEngine.Object.FindObjectOfType<ChatGui>().ShowChannel(this.Channel);
+		Object.FindObjectOfType<ChatGui>().ShowChannel(this.Channel);
 	}
 
 	public string Channel;

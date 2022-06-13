@@ -66,13 +66,17 @@ public class CameraController3 : Singleton<CameraController3>
 	{
 		if (this.ActivePreset.EnableRotation && (this.TargetPoint - base.transform.position).sqrMagnitude >= this.SqrMinDistance)
 		{
-			Quaternion b = Quaternion.LookRotation(this.TargetPoint - base.transform.position, Vector3.up);
-			this.ActivePreset.CameraHolder.rotation = Quaternion.Lerp(this.ActivePreset.CameraHolder.rotation, b, Time.deltaTime * this.ActivePreset.SetRotationSpeed);
+			Quaternion quaternion = Quaternion.LookRotation(this.TargetPoint - base.transform.position, Vector3.up);
+			this.ActivePreset.CameraHolder.rotation = Quaternion.Lerp(this.ActivePreset.CameraHolder.rotation, quaternion, Time.deltaTime * this.ActivePreset.SetRotationSpeed);
 		}
 		base.transform.position = Vector3.LerpUnclamped(base.transform.position, this.TargetPoint, Time.deltaTime * this.ActivePreset.SetPositionSpeed);
-		if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Joystick1Button2))
+		if ((Input.GetKeyDown(99) && !SneakyManager.GetChat()) || Input.GetKeyDown(352))
 		{
 			this.SetNextCamera();
+		}
+		if (Input.GetKeyDown(308))
+		{
+			SneakyManager.SetMouseFree();
 		}
 	}
 

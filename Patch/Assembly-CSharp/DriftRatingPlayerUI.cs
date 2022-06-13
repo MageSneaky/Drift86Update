@@ -19,7 +19,7 @@ public class DriftRatingPlayerUI : MonoBehaviour
 
 	public void Bye()
 	{
-		UnityEngine.Object.Destroy(this);
+		Object.Destroy(this);
 	}
 
 	[SerializeField]

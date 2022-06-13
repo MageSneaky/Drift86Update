@@ -578,9 +578,9 @@ public class CarController : MonoBehaviourPunCallbacks, ISetColor
 			{
 				return;
 			}
-			float b = (this.CurrentAcceleration > 0f) ? this.MaxRPM : this.MinRPM;
-			float num = (this.CurrentAcceleration > 0f) ? this.RpmEngineToRpmWheelsLerpSpeed : (this.RpmEngineToRpmWheelsLerpSpeed * 0.2f);
-			this.EngineRPM = Mathf.Lerp(this.EngineRPM, b, num * Time.fixedDeltaTime);
+			float num = (this.CurrentAcceleration > 0f) ? this.MaxRPM : this.MinRPM;
+			float num2 = (this.CurrentAcceleration > 0f) ? this.RpmEngineToRpmWheelsLerpSpeed : (this.RpmEngineToRpmWheelsLerpSpeed * 0.2f);
+			this.EngineRPM = Mathf.Lerp(this.EngineRPM, num, num2 * Time.fixedDeltaTime);
 			if (this.EngineRPM >= this.CutOffRPM)
 			{
 				this.PlayBackfireWithProbability();
@@ -591,17 +591,17 @@ public class CarController : MonoBehaviourPunCallbacks, ISetColor
 		}
 		else
 		{
-			float num2 = 0f;
+			float num3 = 0f;
 			for (int i = this.FirstDriveWheel + 1; i <= this.LastDriveWheel; i++)
 			{
-				num2 += this.Wheels[i].WheelCollider.rpm;
+				num3 += this.Wheels[i].WheelCollider.rpm;
 			}
-			num2 /= (float)(this.LastDriveWheel - this.FirstDriveWheel + 1);
+			num3 /= (float)(this.LastDriveWheel - this.FirstDriveWheel + 1);
 			if (!this.InCutOff)
 			{
-				float num3 = ((num2 + 20f) * this.AllGearsRatio[this.CurrentGearIndex]).Abs();
-				num3 = Mathf.Clamp(num3, this.MinRPM, this.MaxRPM);
-				this.EngineRPM = Mathf.Lerp(this.EngineRPM, num3, this.RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime);
+				float num4 = ((num3 + 20f) * this.AllGearsRatio[this.CurrentGearIndex]).Abs();
+				num4 = Mathf.Clamp(num4, this.MinRPM, this.MaxRPM);
+				this.EngineRPM = Mathf.Lerp(this.EngineRPM, num4, this.RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime);
 			}
 			if (this.EngineRPM >= this.CutOffRPM)
 			{
@@ -615,16 +615,16 @@ public class CarController : MonoBehaviourPunCallbacks, ISetColor
 				if ((float)this.CarDirection * this.CurrentAcceleration >= 0f)
 				{
 					this.CurrentBrake = 0f;
-					float num4 = this.MotorTorqueFromRpmCurve.Evaluate(this.EngineRPM * 0.001f);
-					float motorTorque = this.CurrentAcceleration * (num4 * (this.MaxMotorTorque * this.AllGearsRatio[this.CurrentGearIndex]));
-					if (Mathf.Abs(num2) * this.AllGearsRatio[this.CurrentGearIndex] > this.MaxRPM)
+					float num5 = this.MotorTorqueFromRpmCurve.Evaluate(this.EngineRPM * 0.001f);
+					float motorTorque = this.CurrentAcceleration * (num5 * (this.MaxMotorTorque * this.AllGearsRatio[this.CurrentGearIndex]));
+					if (Mathf.Abs(num3) * this.AllGearsRatio[this.CurrentGearIndex] > this.MaxRPM)
 					{
 						motorTorque = 0f;
 					}
-					float num5 = this.AllGearsRatio[this.CurrentGearIndex] * this.EngineRPM;
+					float num6 = this.AllGearsRatio[this.CurrentGearIndex] * this.EngineRPM;
 					for (int j = this.FirstDriveWheel; j <= this.LastDriveWheel; j++)
 					{
-						if (this.Wheels[j].WheelCollider.rpm <= num5)
+						if (this.Wheels[j].WheelCollider.rpm <= num6)
 						{
 							this.Wheels[j].WheelCollider.motorTorque = motorTorque;
 						}
@@ -661,25 +661,25 @@ public class CarController : MonoBehaviourPunCallbacks, ISetColor
 						break;
 					}
 				}
-				float num6 = 0f;
 				float num7 = 0f;
+				float num8 = 0f;
 				if (!flag && this.EngineRPM > this.RpmToNextGear && this.CurrentGear >= 0 && this.CurrentGear < this.AllGearsRatio.Length - 2)
 				{
-					num6 = this.AllGearsRatio[this.CurrentGearIndex];
+					num7 = this.AllGearsRatio[this.CurrentGearIndex];
 					int currentGear = this.CurrentGear;
 					this.CurrentGear = currentGear + 1;
-					num7 = this.AllGearsRatio[this.CurrentGearIndex];
+					num8 = this.AllGearsRatio[this.CurrentGearIndex];
 				}
 				else if (this.EngineRPM < this.RpmToPrevGear && this.CurrentGear > 0 && (this.EngineRPM <= this.MinRPM || this.CurrentGear != 1))
 				{
-					num6 = this.AllGearsRatio[this.CurrentGearIndex];
+					num7 = this.AllGearsRatio[this.CurrentGearIndex];
 					int currentGear = this.CurrentGear;
 					this.CurrentGear = currentGear - 1;
-					num7 = this.AllGearsRatio[this.CurrentGearIndex];
+					num8 = this.AllGearsRatio[this.CurrentGearIndex];
 				}
-				if (!Mathf.Approximately(num6, 0f) && !Mathf.Approximately(num7, 0f))
+				if (!Mathf.Approximately(num7, 0f) && !Mathf.Approximately(num8, 0f))
 				{
-					this.EngineRPM = Mathf.Lerp(this.EngineRPM, this.EngineRPM * (num7 / num6), this.RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime);
+					this.EngineRPM = Mathf.Lerp(this.EngineRPM, this.EngineRPM * (num8 / num7), this.RpmEngineToRpmWheelsLerpSpeed * Time.fixedDeltaTime);
 				}
 				if (this.CarDirection <= 0 && this.CurrentAcceleration < 0f)
 				{
@@ -707,7 +707,7 @@ public class CarController : MonoBehaviourPunCallbacks, ISetColor
 
 	private void PlayBackfireWithProbability(float probability)
 	{
-		if (UnityEngine.Random.Range(0f, 1f) <= probability)
+		if (Random.Range(0f, 1f) <= probability)
 		{
 			this.BackFireAction.SafeInvoke();
 		}

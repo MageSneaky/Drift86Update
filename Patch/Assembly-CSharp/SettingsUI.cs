@@ -113,4 +113,6 @@ public class SettingsUI : WindowWithShowHideAnimators
 
 	[SerializeField]
 	private Button ChangeNickNameButton;
+
+	private string nameField = "";
 }

@@ -45,7 +45,7 @@ public class FXController : Singleton<FXController>
 		}
 		else
 		{
-			trailRenderer = UnityEngine.Object.Instantiate<TrailRenderer>(this.TrailRef, this.TrailsHolder);
+			trailRenderer = Object.Instantiate<TrailRenderer>(this.TrailRef, this.TrailsHolder);
 		}
 		trailRenderer.transform.position = startPos;
 		trailRenderer.gameObject.SetActive(true);
@@ -90,7 +90,7 @@ public class FXController : Singleton<FXController>
 				Debug.LogWarning("No free SoundSources");
 				return;
 			}
-			audioSource = UnityEngine.Object.Instantiate<AudioSource>(this.AudioSourceRef, this.SoundsHolder);
+			audioSource = Object.Instantiate<AudioSource>(this.AudioSourceRef, this.SoundsHolder);
 			audioSource.gameObject.SetActive(true);
 			this.SourceCount++;
 		}

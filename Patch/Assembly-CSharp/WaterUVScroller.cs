@@ -16,9 +16,9 @@ public class WaterUVScroller : MonoBehaviour
 	{
 		for (int i = 0; i < this.m_renderers.Length; i++)
 		{
-			Vector3 a = this.m_direction.normalized;
-			this.m_renderers[i].sharedMaterial.SetTextureOffset("_MainTex", Time.time * this.m_speedMainTex * a);
-			this.m_renderers[i].sharedMaterial.SetTextureOffset("_BumpMap", Time.time * this.m_speedBumpMap * a);
+			Vector3 vector = this.m_direction.normalized;
+			this.m_renderers[i].sharedMaterial.SetTextureOffset("_MainTex", Time.time * this.m_speedMainTex * vector);
+			this.m_renderers[i].sharedMaterial.SetTextureOffset("_BumpMap", Time.time * this.m_speedBumpMap * vector);
 		}
 	}
 

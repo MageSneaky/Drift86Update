@@ -25,7 +25,7 @@ namespace AsImpL
 			if (a == ".png" || a == ".jpg")
 			{
 				Texture2D texture2D = new Texture2D(1, 1);
-				texture2D.LoadImage(File.ReadAllBytes(fileName));
+				ImageConversion.LoadImage(texture2D, File.ReadAllBytes(fileName));
 				return texture2D;
 			}
 			if (a == ".dds")
@@ -60,23 +60,23 @@ namespace AsImpL
 				{
 					throw new Exception("Invalid DDS DXTn texture. Unable to read");
 				}
-				int height = (int)array[13] * 256 + (int)array[12];
-				int width = (int)array[17] * 256 + (int)array[16];
+				int num = (int)array[13] * 256 + (int)array[12];
+				int num2 = (int)array[17] * 256 + (int)array[16];
 				byte b = array[87];
-				TextureFormat textureFormat = TextureFormat.DXT5;
+				TextureFormat textureFormat = 12;
 				if (b == 49)
 				{
-					textureFormat = TextureFormat.DXT1;
+					textureFormat = 10;
 				}
 				if (b == 53)
 				{
-					textureFormat = TextureFormat.DXT5;
+					textureFormat = 12;
 				}
-				int num = 128;
-				byte[] array2 = new byte[array.Length - num];
-				Buffer.BlockCopy(array, num, array2, 0, array.Length - num);
+				int num3 = 128;
+				byte[] array2 = new byte[array.Length - num3];
+				Buffer.BlockCopy(array, num3, array2, 0, array.Length - num3);
 				FileInfo fileInfo = new FileInfo(ddsPath);
-				Texture2D texture2D = new Texture2D(width, height, textureFormat, false);
+				Texture2D texture2D = new Texture2D(num2, num, textureFormat, false);
 				texture2D.LoadRawTextureData(array2);
 				texture2D.Apply();
 				texture2D.name = fileInfo.Name;
@@ -112,9 +112,9 @@ namespace AsImpL
 							for (int j = 0; j < (int)num; j++)
 							{
 								byte b = binaryReader.ReadByte();
-								byte g = binaryReader.ReadByte();
-								byte r = binaryReader.ReadByte();
-								byte a = binaryReader.ReadByte();
+								byte b2 = binaryReader.ReadByte();
+								byte b3 = binaryReader.ReadByte();
+								byte b4 = binaryReader.ReadByte();
 								int num4;
 								if (flag)
 								{
@@ -124,7 +124,7 @@ namespace AsImpL
 								{
 									num4 = num3 - ((int)num2 - i + 1) * (int)num + j;
 								}
-								array[num4] = new Color32(r, g, b, a);
+								array[num4] = new Color32(b3, b2, b, b4);
 							}
 						}
 					}
@@ -138,9 +138,9 @@ namespace AsImpL
 						{
 							for (int l = 0; l < (int)num; l++)
 							{
-								byte b2 = binaryReader.ReadByte();
-								byte g2 = binaryReader.ReadByte();
-								byte r2 = binaryReader.ReadByte();
+								byte b5 = binaryReader.ReadByte();
+								byte b6 = binaryReader.ReadByte();
+								byte b7 = binaryReader.ReadByte();
 								int num5;
 								if (flag)
 								{
@@ -150,7 +150,7 @@ namespace AsImpL
 								{
 									num5 = num3 - ((int)num2 - k + 1) * (int)num + l;
 								}
-								array[num5] = new Color32(r2, g2, b2, byte.MaxValue);
+								array[num5] = new Color32(b7, b6, b5, byte.MaxValue);
 							}
 						}
 					}
@@ -159,9 +159,9 @@ namespace AsImpL
 					result = texture2D;
 				}
 			}
-			catch (Exception message)
+			catch (Exception ex)
 			{
-				Debug.LogWarning(message);
+				Debug.LogWarning(ex);
 				result = null;
 			}
 			return result;

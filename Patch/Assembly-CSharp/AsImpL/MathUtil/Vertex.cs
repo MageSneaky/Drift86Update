@@ -55,17 +55,17 @@ namespace AsImpL.MathUtil
 
 		public Vector2 GetPosOnPlane(Vector3 planeNormal)
 		{
-			Quaternion rotation = default(Quaternion);
-			rotation.SetFromToRotation(planeNormal, Vector3.back);
-			Vector3 vector = rotation * this.Position;
+			Quaternion quaternion = default(Quaternion);
+			quaternion.SetFromToRotation(planeNormal, Vector3.back);
+			Vector3 vector = quaternion * this.Position;
 			return new Vector2(vector.x, vector.y);
 		}
 
 		private void ComputeTriangleArea()
 		{
-			Vector3 lhs = this.PreviousVertex.Position - this.Position;
-			Vector3 rhs = this.NextVertex.Position - this.Position;
-			this.triangleArea = Vector3.Cross(lhs, rhs).magnitude / 2f;
+			Vector3 vector = this.PreviousVertex.Position - this.Position;
+			Vector3 vector2 = this.NextVertex.Position - this.Position;
+			this.triangleArea = Vector3.Cross(vector, vector2).magnitude / 2f;
 		}
 
 		private Vertex prevVertex;

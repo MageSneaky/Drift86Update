@@ -21,7 +21,7 @@ public class SI_PersistantUserList : MonoBehaviour
 	{
 		if (PhotonNetwork.InRoom && this.tempo == 10)
 		{
-			this.PlayerNamePhoton = UnityEngine.Object.FindObjectsOfType<PhotonView>();
+			this.PlayerNamePhoton = Object.FindObjectsOfType<PhotonView>();
 			this.pcount.text = string.Concat(PhotonNetwork.CurrentRoom.PlayerCount);
 			this.UpdatePlayerList();
 		}
@@ -48,7 +48,7 @@ public class SI_PersistantUserList : MonoBehaviour
 					this.PlayerNamePhoton[num2].ViewID,
 					"|"
 				});
-				UnityEngine.Object.Instantiate<GameObject>(this.NewPlayerList, this.NewPlayerList.transform.parent);
+				Object.Instantiate<GameObject>(this.NewPlayerList, this.NewPlayerList.transform.parent);
 				this.NewPlayerList.SetActive(true);
 				this.NewPlayerList.GetComponentInChildren<TextMeshProUGUI>().text = (this.PlayerNamePhoton[num2].Owner.NickName ?? "");
 				this.NewPlayerList.GetComponentInChildren<Shadow>().gameObject.GetComponent<Text>().text = string.Concat(this.PlayerNamePhoton[num2].ViewID);
@@ -66,7 +66,7 @@ public class SI_PersistantUserList : MonoBehaviour
 				}
 				else
 				{
-					UnityEngine.Object.Destroy(gameObject.GetComponentInParent<Image>().gameObject);
+					Object.Destroy(gameObject.GetComponentInParent<Image>().gameObject);
 				}
 			}
 		}

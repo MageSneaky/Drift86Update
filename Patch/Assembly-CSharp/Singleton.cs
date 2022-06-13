@@ -18,12 +18,12 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 			Singleton<T>.instance = (this as T);
 			if (this.dontDestroyOnLoad)
 			{
-				UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
+				Object.DontDestroyOnLoad(base.gameObject);
 			}
 			this.AwakeSingleton();
 			return;
 		}
-		UnityEngine.Object.Destroy(base.gameObject.GetComponent<T>());
+		Object.Destroy(base.gameObject.GetComponent<T>());
 	}
 
 	protected abstract void AwakeSingleton();

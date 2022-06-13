@@ -73,7 +73,7 @@ namespace GameBalance
 
 		public CarColorPreset GetRandomColor()
 		{
-			return this.AvailibleColors[UnityEngine.Random.Range(0, this.AvailibleColors.Count)];
+			return this.AvailibleColors[Random.Range(0, this.AvailibleColors.Count)];
 		}
 
 		public CarPreset(string carCaption, GameObject carPrefabForSelectMenu, CarController carPrefab, List<CarColorPreset> colors, string description, LockedContent.UnlockType unlockType, int price, TrackPreset completeTrackForUnlock)

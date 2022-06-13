@@ -8,7 +8,7 @@ namespace BrainFailProductions.PolyFew
 	{
 		private void Start()
 		{
-			UnityEngine.Object.DestroyImmediate(this);
+			Object.DestroyImmediate(this);
 		}
 
 		private void Update()

@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class AttentionUI : MonoBehaviour
 {
@@ -14,9 +13,9 @@ public class AttentionUI : MonoBehaviour
 	{
 		if (Input.touchCount > 0 || Input.anyKey)
 		{
-			UnityEngine.Object.Destroy(this);
+			Object.Destroy(this);
 			SoundControllerInUI.PlayAudioClip(this.ClickClip);
-			LoadingScreenUI.LoadScene(this.NextSceneName, LoadSceneMode.Single);
+			LoadingScreenUI.LoadScene(this.NextSceneName, 0);
 		}
 	}
 

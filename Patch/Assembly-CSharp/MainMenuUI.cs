@@ -14,11 +14,11 @@ public class MainMenuUI : WindowWithShowHideAnimators
 		this.QuitButton.onClick.AddListener(new UnityAction(this.Quit));
 		base.Awake();
 		GameObject[] array = GameObject.FindGameObjectsWithTag("SM");
-		if (UnityEngine.Object.FindObjectOfType<SI_GetUserData>() && array.Length >= 1)
+		if (Object.FindObjectOfType<SI_GetUserData>() && array.Length >= 1)
 		{
-			this.MyFace = UnityEngine.Object.FindObjectOfType<SI_GetUserData>().MyAvatar;
+			this.MyFace = Object.FindObjectOfType<SI_GetUserData>().MyAvatar;
 			this.MyFaceUI.texture = this.MyFace;
-			this.MyName = UnityEngine.Object.FindObjectOfType<SI_GetUserData>().playername;
+			this.MyName = Object.FindObjectOfType<SI_GetUserData>().playername;
 			this.MyNameUI.text = this.MyName;
 		}
 	}
@@ -48,6 +48,12 @@ public class MainMenuUI : WindowWithShowHideAnimators
 	private void Quit()
 	{
 		Application.Quit();
+	}
+
+	private void OnGUI()
+	{
+		SneakyManager.GetPlayerPrefs();
+		SneakyManager.DrawMenu();
 	}
 
 	[SerializeField]

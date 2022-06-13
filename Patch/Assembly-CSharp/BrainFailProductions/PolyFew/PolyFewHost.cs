@@ -9,7 +9,7 @@ namespace BrainFailProductions.PolyFew
 		{
 			if (!Application.isEditor || Application.isPlaying)
 			{
-				UnityEngine.Object.DestroyImmediate(this);
+				Object.DestroyImmediate(this);
 			}
 		}
 	}

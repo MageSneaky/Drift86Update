@@ -9,7 +9,7 @@ public class PolygonReduction : MonoBehaviour
 {
 	private void Start()
 	{
-		if (Application.platform == RuntimePlatform.WebGLPlayer)
+		if (Application.platform == 17)
 		{
 			this.isWebGL = true;
 		}
@@ -273,8 +273,8 @@ public class PolygonReduction : MonoBehaviour
 
 	private bool IsMouseOverUI(RectTransform uiElement)
 	{
-		Vector2 point = uiElement.InverseTransformPoint(Input.mousePosition);
-		return uiElement.rect.Contains(point);
+		Vector2 vector = uiElement.InverseTransformPoint(Input.mousePosition);
+		return uiElement.rect.Contains(vector);
 	}
 
 	private IEnumerator ShowMessage(string message)

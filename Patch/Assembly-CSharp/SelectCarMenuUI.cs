@@ -118,7 +118,7 @@ public class SelectCarMenuUI : WindowWithShopLogic
 	{
 		if (this.CarInScene)
 		{
-			UnityEngine.Object.Destroy(this.CarInScene.gameObject);
+			Object.Destroy(this.CarInScene.gameObject);
 		}
 		this.CarCaptionText.text = newCar.CarCaption;
 		this.SelectedCar = newCar;
@@ -128,7 +128,7 @@ public class SelectCarMenuUI : WindowWithShopLogic
 		{
 			gameObject = newCar.CarPrefab.gameObject;
 		}
-		this.CarInScene = UnityEngine.Object.Instantiate<GameObject>(gameObject);
+		this.CarInScene = Object.Instantiate<GameObject>(gameObject);
 		this.CarInScene.transform.position = this.CarPosition.position;
 		this.CarInScene.transform.rotation = this.CarPosition.rotation;
 		this.CarParammsPanel.SelectCar(newCar);
@@ -163,7 +163,7 @@ public class SelectCarMenuUI : WindowWithShopLogic
 
 	public void CHeckDlcpage()
 	{
-		this.CarsPack.OpenStore(EOverlayToStoreFlag.k_EOverlayToStoreFlag_None);
+		this.CarsPack.OpenStore(0);
 	}
 
 	public void StartGame()

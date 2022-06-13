@@ -10,9 +10,9 @@ public class SetRandomColorForMaterial : MonoBehaviour
 		{
 			return;
 		}
-		Color value = this.Colors.RandomChoice<Color>();
+		Color color = this.Colors.RandomChoice<Color>();
 		MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-		materialPropertyBlock.SetColor("_Color", value);
+		materialPropertyBlock.SetColor("_Color", color);
 		base.GetComponent<Renderer>().SetPropertyBlock(materialPropertyBlock);
 	}
 

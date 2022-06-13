@@ -54,7 +54,7 @@ public struct Wheel
 
 	public void FixedUpdate()
 	{
-		if (this.WheelCollider.GetGroundHit(out this.Hit))
+		if (this.WheelCollider.GetGroundHit(ref this.Hit))
 		{
 			float currentForwardSleep = this.CurrentForwardSleep;
 			float currentSidewaysSleep = this.CurrentSidewaysSleep;
@@ -103,7 +103,7 @@ public struct Wheel
 	{
 		Vector3 position;
 		Quaternion rotation;
-		this.WheelCollider.GetWorldPose(out position, out rotation);
+		this.WheelCollider.GetWorldPose(ref position, ref rotation);
 		this.WheelView.position = position;
 		this.WheelView.rotation = rotation;
 	}

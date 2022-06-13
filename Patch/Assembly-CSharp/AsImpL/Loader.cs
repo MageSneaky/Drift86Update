@@ -736,9 +736,9 @@ namespace AsImpL
 				FileStream stream = null;
 				if (result.Length != 0)
 				{
-					Texture2D tex = new Texture2D(1, 1);
-					tex.LoadImage(result);
-					this.loadedTexture = tex;
+					Texture2D texture2D = new Texture2D(1, 1);
+					ImageConversion.LoadImage(texture2D, result);
+					this.loadedTexture = texture2D;
 				}
 				result = null;
 			}
@@ -793,9 +793,9 @@ namespace AsImpL
 				ObjectImporter.downloadProgress.Value = this.individualProgress.Value / (float)ObjectImporter.activeDownloads * 100f;
 				if (downloadedBytes != null && downloadedBytes.Length != 0)
 				{
-					Texture2D tex = new Texture2D(1, 1);
-					tex.LoadImage(downloadedBytes);
-					this.loadedTexture = tex;
+					Texture2D texture2D = new Texture2D(1, 1);
+					ImageConversion.LoadImage(texture2D, downloadedBytes);
+					this.loadedTexture = texture2D;
 				}
 				else
 				{

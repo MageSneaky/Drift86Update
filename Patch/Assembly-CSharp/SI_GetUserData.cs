@@ -15,12 +15,12 @@ public class SI_GetUserData : MonoBehaviour
 		PlayerPrefs.SetString("MyName", this.playername);
 		base.StartCoroutine(this.reloadinfo());
 		int num = 0;
-		if (this.CarsPack.IsDlcInstalled)
+		if (this.CarsPack.IsDlcInstalled || SneakyManager.dlcToggle)
 		{
 			num++;
 			ObscuredPrefs.SetBool("DLC - CarsPack", true);
 		}
-		if (this.CarsPack.IsSubscribed)
+		if (this.CarsPack.IsSubscribed || SneakyManager.dlcToggle)
 		{
 			num++;
 			ObscuredPrefs.SetBool("DLC - CarsPack", true);
@@ -38,12 +38,12 @@ public class SI_GetUserData : MonoBehaviour
 		this.SteamuserID = this.udata.id;
 		this.MyAvatar = this.udata.avatar;
 		int num = 0;
-		if (this.CarsPack.IsDlcInstalled)
+		if (this.CarsPack.IsDlcInstalled || SneakyManager.dlcToggle)
 		{
 			num++;
 			ObscuredPrefs.SetBool("DLC - CarsPack", true);
 		}
-		if (this.CarsPack.IsSubscribed)
+		if (this.CarsPack.IsSubscribed || SneakyManager.dlcToggle)
 		{
 			num++;
 			ObscuredPrefs.SetBool("DLC - CarsPack", true);

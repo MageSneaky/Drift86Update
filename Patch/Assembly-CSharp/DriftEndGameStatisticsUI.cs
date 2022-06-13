@@ -5,7 +5,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DriftEndGameStatisticsUI : MonoBehaviour
@@ -141,7 +140,7 @@ public class DriftEndGameStatisticsUI : MonoBehaviour
 
 	private void Exit()
 	{
-		LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, LoadSceneMode.Single);
+		LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, 0);
 	}
 
 	private void OnDestroy()

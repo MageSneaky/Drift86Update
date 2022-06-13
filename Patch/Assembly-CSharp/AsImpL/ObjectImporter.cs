@@ -193,9 +193,9 @@ namespace AsImpL
 				this.allLoaded = true;
 				if (this.loaderList != null)
 				{
-					foreach (Loader obj in this.loaderList)
+					foreach (Loader loader in this.loaderList)
 					{
-						UnityEngine.Object.Destroy(obj);
+						Object.Destroy(loader);
 					}
 					this.loaderList.Clear();
 				}

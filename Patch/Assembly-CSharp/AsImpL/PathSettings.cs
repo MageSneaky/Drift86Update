@@ -29,7 +29,7 @@ namespace AsImpL
 			PathSettings pathSettings = obj.GetComponent<PathSettings>();
 			if (pathSettings == null)
 			{
-				pathSettings = UnityEngine.Object.FindObjectOfType<PathSettings>();
+				pathSettings = Object.FindObjectOfType<PathSettings>();
 			}
 			if (pathSettings == null)
 			{

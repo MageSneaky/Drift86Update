@@ -39,7 +39,7 @@ public class CarSetColorUI : MonoBehaviour
 			ColorPresentUI color;
 			if (this.Colors.Count <= i)
 			{
-				color = UnityEngine.Object.Instantiate<ColorPresentUI>(this.ColorPresentRef, this.ColorPresentRef.transform.parent);
+				color = Object.Instantiate<ColorPresentUI>(this.ColorPresentRef, this.ColorPresentRef.transform.parent);
 				RectTransform rectTransform = color.transform as RectTransform;
 				Vector2 anchoredPosition = rectTransform.anchoredPosition;
 				anchoredPosition.x += (this.OffsetBetweenPresets + rectTransform.sizeDelta.x) * (float)i;

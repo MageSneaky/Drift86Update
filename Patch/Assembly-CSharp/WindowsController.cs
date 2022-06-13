@@ -19,7 +19,7 @@ public class WindowsController : Singleton<WindowsController>
 
 	protected override void AwakeSingleton()
 	{
-		Window[] array = UnityEngine.Object.FindObjectsOfType<Window>();
+		Window[] array = Object.FindObjectsOfType<Window>();
 		for (int i = 0; i < array.Length; i++)
 		{
 			array[i].SetActive(false);
@@ -42,7 +42,7 @@ public class WindowsController : Singleton<WindowsController>
 		{
 			this.HasNewWindowInFrame = false;
 		}
-		else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && this.CurrentWindow != null && this.CurrentWindow != this.MainWindow)
+		else if ((Input.GetKeyDown(27) || Input.GetKeyDown(351)) && this.CurrentWindow != null && this.CurrentWindow != this.MainWindow)
 		{
 			this.OnBack(false);
 		}
@@ -75,12 +75,12 @@ public class WindowsController : Singleton<WindowsController>
 
 	public void OnBack(bool ignoreCustomBackAction = false)
 	{
-		if (UnityEngine.Object.FindObjectOfType<LauncherManager>())
+		if (Object.FindObjectOfType<LauncherManager>())
 		{
-			UnityEngine.Object.FindObjectOfType<LauncherManager>().activateSettings();
+			Object.FindObjectOfType<LauncherManager>().activateSettings();
 			Debug.Log("OK SALUT");
 		}
-		AudioSettingsMenu[] array = UnityEngine.Object.FindObjectsOfType<AudioSettingsMenu>();
+		AudioSettingsMenu[] array = Object.FindObjectsOfType<AudioSettingsMenu>();
 		if (array.Length != 0 && SceneManager.GetActiveScene().name == "MainMenuScene")
 		{
 			foreach (AudioSettingsMenu audioSettingsMenu in array)
@@ -91,9 +91,9 @@ public class WindowsController : Singleton<WindowsController>
 				}
 			}
 		}
-		else if (UnityEngine.Object.FindObjectOfType<AudioSettingsMenu>())
+		else if (Object.FindObjectOfType<AudioSettingsMenu>())
 		{
-			UnityEngine.Object.FindObjectOfType<AudioSettingsMenu>().SaveMenuVariables();
+			Object.FindObjectOfType<AudioSettingsMenu>().SaveMenuVariables();
 		}
 		if (!ignoreCustomBackAction && this.CurrentWindow != null && this.CurrentWindow.CustomBackAction != null)
 		{

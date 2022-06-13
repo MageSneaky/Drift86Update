@@ -44,13 +44,9 @@ public class RoomListUI : MonoBehaviour
 
 	private void ConnectToRandomRoom()
 	{
-		PhotonNetwork.JoinRandomRoom(new Hashtable
-		{
-			{
-				"rr",
-				true
-			}
-		}, 0, MatchmakingMode.RandomMatching, null, null, null);
+		Hashtable hashtable = new Hashtable();
+		hashtable.Add("rr", true);
+		PhotonNetwork.JoinRandomRoom(hashtable, 0, 2, null, null, null);
 	}
 
 	public void CreateRandomRoom()
@@ -101,7 +97,7 @@ public class RoomListUI : MonoBehaviour
 		{
 			if (roomItemUI != null && roomItemUI.Room == null)
 			{
-				UnityEngine.Object.Destroy(roomItemUI.gameObject);
+				Object.Destroy(roomItemUI.gameObject);
 			}
 		}
 		this.RoomItems.RemoveAll((RoomItemUI i) => i == null);
@@ -115,7 +111,7 @@ public class RoomListUI : MonoBehaviour
 					RoomItemUI roomItemUI2 = this.RoomItems.FirstOrDefault((RoomItemUI r) => r.Room != null && r.Room.Name == room.Name);
 					if (roomItemUI2 == null)
 					{
-						roomItemUI2 = UnityEngine.Object.Instantiate<RoomItemUI>(this.RoomItemUIRef, this.RoomItemUIRef.transform.parent);
+						roomItemUI2 = Object.Instantiate<RoomItemUI>(this.RoomItemUIRef, this.RoomItemUIRef.transform.parent);
 						this.RoomItems.Add(roomItemUI2);
 					}
 					if (room.CustomProperties == null || room.PlayerCount == 0 || !room.IsOpen || !room.CustomProperties.ContainsKey("rc") || !room.CustomProperties.ContainsKey("tn"))

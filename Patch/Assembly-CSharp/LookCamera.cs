@@ -15,12 +15,12 @@ public class LookCamera : MonoBehaviour
 	{
 		if (Input.GetMouseButton(1))
 		{
-			float y = base.transform.localEulerAngles.y + Input.GetAxis("Mouse X") * this.mouseSensitivityX;
+			float num = base.transform.localEulerAngles.y + Input.GetAxis("Mouse X") * this.mouseSensitivityX;
 			this.rotY += Input.GetAxis("Mouse Y") * this.mouseSensitivityY;
 			this.rotY = Mathf.Clamp(this.rotY, -89.5f, 89.5f);
-			base.transform.localEulerAngles = new Vector3(-this.rotY, y, 0f);
+			base.transform.localEulerAngles = new Vector3(-this.rotY, num, 0f);
 		}
-		if (Input.GetKey(KeyCode.U))
+		if (Input.GetKey(117))
 		{
 			base.gameObject.transform.localPosition = new Vector3(0f, 3500f, 0f);
 		}

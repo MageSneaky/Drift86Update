@@ -20,6 +20,6 @@ public static class ArrayExtensions
 			Debug.LogError("List is null or empty");
 			return default(T);
 		}
-		return list[UnityEngine.Random.Range(0, list.Count)];
+		return list[Random.Range(0, list.Count)];
 	}
 }

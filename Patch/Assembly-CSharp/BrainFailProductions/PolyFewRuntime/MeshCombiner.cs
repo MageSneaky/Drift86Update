@@ -107,7 +107,7 @@ namespace BrainFailProductions.PolyFewRuntime
 				MeshRenderer[] array = MeshCombiner.unityCombinedMeshRenderers;
 				for (int i = 0; i < array.Length; i++)
 				{
-					UnityEngine.Object.DestroyImmediate(array[i].gameObject);
+					Object.DestroyImmediate(array[i].gameObject);
 				}
 			}
 			MeshCombiner.unityCombinedMeshRenderers = null;
@@ -144,9 +144,9 @@ namespace BrainFailProductions.PolyFewRuntime
 			where renderer.sharedMesh != null
 			select renderer).ToArray<SkinnedMeshRenderer>();
 			renderersActuallyCombined = array;
-			foreach (SkinnedMeshRenderer context in enumerable)
+			foreach (SkinnedMeshRenderer skinnedMeshRenderer in enumerable)
 			{
-				Debug.LogWarning("A renderer was missing a mesh and was ignored.", context);
+				Debug.LogWarning("A renderer was missing a mesh and was ignored.", skinnedMeshRenderer);
 			}
 			if (array.Length != 0)
 			{
@@ -299,14 +299,14 @@ namespace BrainFailProductions.PolyFewRuntime
 					{
 						for (int l = 0; l < sharedMesh.GetBlendShapeFrameCount(k); l++)
 						{
-							Vector3[] deltaVertices = new Vector3[sharedMesh.vertexCount];
-							Vector3[] deltaNormals = new Vector3[sharedMesh.vertexCount];
-							Vector3[] deltaTangents = new Vector3[sharedMesh.vertexCount];
+							Vector3[] array6 = new Vector3[sharedMesh.vertexCount];
+							Vector3[] array7 = new Vector3[sharedMesh.vertexCount];
+							Vector3[] array8 = new Vector3[sharedMesh.vertexCount];
 							int hashCode = skinnedMeshRenderer.GetHashCode();
 							if (!dictionary.ContainsKey(sharedMesh.GetBlendShapeName(k) + hashCode))
 							{
-								sharedMesh.GetBlendShapeFrameVertices(k, l, deltaVertices, deltaNormals, deltaTangents);
-								dictionary.Add(sharedMesh.GetBlendShapeName(k) + hashCode, new MeshCombiner.BlendShapeFrame(sharedMesh.GetBlendShapeName(k) + hashCode, sharedMesh.GetBlendShapeFrameWeight(k, l), deltaVertices, deltaNormals, deltaTangents, num));
+								sharedMesh.GetBlendShapeFrameVertices(k, l, array6, array7, array8);
+								dictionary.Add(sharedMesh.GetBlendShapeName(k) + hashCode, new MeshCombiner.BlendShapeFrame(sharedMesh.GetBlendShapeName(k) + hashCode, sharedMesh.GetBlendShapeFrameWeight(k, l), array6, array7, array8, num));
 							}
 						}
 					}
@@ -664,8 +664,8 @@ namespace BrainFailProductions.PolyFewRuntime
 			{
 				if (transform.Item2)
 				{
-					Quaternion rotation = Quaternion.LookRotation(transform.Item1.GetColumn(2), transform.Item1.GetColumn(1));
-					normals[i] = rotation * normals[i];
+					Quaternion quaternion = Quaternion.LookRotation(transform.Item1.GetColumn(2), transform.Item1.GetColumn(1));
+					normals[i] = quaternion * normals[i];
 				}
 				else
 				{
@@ -712,25 +712,24 @@ namespace BrainFailProductions.PolyFewRuntime
 
 		private static Matrix4x4 ScaleMatrix(ref Matrix4x4 matrix, float scale)
 		{
-			return new Matrix4x4
-			{
-				m00 = matrix.m00 * scale,
-				m01 = matrix.m01 * scale,
-				m02 = matrix.m02 * scale,
-				m03 = matrix.m03 * scale,
-				m10 = matrix.m10 * scale,
-				m11 = matrix.m11 * scale,
-				m12 = matrix.m12 * scale,
-				m13 = matrix.m13 * scale,
-				m20 = matrix.m20 * scale,
-				m21 = matrix.m21 * scale,
-				m22 = matrix.m22 * scale,
-				m23 = matrix.m23 * scale,
-				m30 = matrix.m30 * scale,
-				m31 = matrix.m31 * scale,
-				m32 = matrix.m32 * scale,
-				m33 = matrix.m33 * scale
-			};
+			Matrix4x4 result = default(Matrix4x4);
+			result.m00 = matrix.m00 * scale;
+			result.m01 = matrix.m01 * scale;
+			result.m02 = matrix.m02 * scale;
+			result.m03 = matrix.m03 * scale;
+			result.m10 = matrix.m10 * scale;
+			result.m11 = matrix.m11 * scale;
+			result.m12 = matrix.m12 * scale;
+			result.m13 = matrix.m13 * scale;
+			result.m20 = matrix.m20 * scale;
+			result.m21 = matrix.m21 * scale;
+			result.m22 = matrix.m22 * scale;
+			result.m23 = matrix.m23 * scale;
+			result.m30 = matrix.m30 * scale;
+			result.m31 = matrix.m31 * scale;
+			result.m32 = matrix.m32 * scale;
+			result.m33 = matrix.m33 * scale;
+			return result;
 		}
 
 		private static void CombineMeshesUnity(Transform parentTransform, MeshFilter[] meshFilters)
@@ -751,10 +750,10 @@ namespace BrainFailProductions.PolyFewRuntime
 			foreach (MeshFilter meshFilter2 in meshFilters)
 			{
 				Mesh sharedMesh2 = meshFilter2.sharedMesh;
-				List<Vector3> vertices = new List<Vector3>();
+				List<Vector3> list = new List<Vector3>();
 				Material[] sharedMaterials = meshFilter2.GetComponent<Renderer>().sharedMaterials;
 				int subMeshCount = meshFilter2.sharedMesh.subMeshCount;
-				sharedMesh2.GetVertices(vertices);
+				sharedMesh2.GetVertices(list);
 				if (sharedMaterials == null)
 				{
 					throw new ArgumentException(string.Format("The materials for GameObject are null.", meshFilter2.transform.name), "materials");
@@ -779,18 +778,17 @@ namespace BrainFailProductions.PolyFewRuntime
 				for (int k = 0; k < subMeshCount; k++)
 				{
 					Material key = sharedMaterials[k];
-					List<int> triangles = new List<int>();
-					sharedMesh2.GetTriangles(triangles, k);
-					Mesh mesh = UnityEngine.Object.Instantiate<Mesh>(sharedMesh2);
+					List<int> list2 = new List<int>();
+					sharedMesh2.GetTriangles(list2, k);
+					Mesh mesh = Object.Instantiate<Mesh>(sharedMesh2);
 					if (!dictionary.ContainsKey(key))
 					{
 						dictionary.Add(key, new List<CombineInstance>());
 					}
-					CombineInstance item = new CombineInstance
-					{
-						transform = parentTransform.worldToLocalMatrix * meshFilter2.transform.localToWorldMatrix,
-						mesh = mesh
-					};
+					CombineInstance combineInstance = default(CombineInstance);
+					combineInstance.transform = parentTransform.worldToLocalMatrix * meshFilter2.transform.localToWorldMatrix;
+					combineInstance.mesh = mesh;
+					CombineInstance item = combineInstance;
 					dictionary[key].Add(item);
 				}
 			}
@@ -806,7 +804,7 @@ namespace BrainFailProductions.PolyFewRuntime
 				Mesh mesh2 = new Mesh();
 				if (num > 65534)
 				{
-					mesh2.indexFormat = IndexFormat.UInt32;
+					mesh2.indexFormat = 1;
 				}
 				mesh2.CombineMeshes(keyValuePair.Value.ToArray());
 				meshFilter3.sharedMesh = mesh2;
@@ -986,7 +984,7 @@ namespace BrainFailProductions.PolyFewRuntime
 				{
 					int[] array = indices[l];
 					Vector2Int vector2Int = subMeshIndexMinMax[l];
-					if (indexFormat == IndexFormat.UInt16 && vector2Int.y > 65535)
+					if (indexFormat == null && vector2Int.y > 65535)
 					{
 						int x = vector2Int.x;
 						for (int m = 0; m < array.Length; m++)
@@ -1025,11 +1023,11 @@ namespace BrainFailProductions.PolyFewRuntime
 					for (int j = 0; j < blendShapeFrameCount; j++)
 					{
 						float blendShapeFrameWeight = mesh.GetBlendShapeFrameWeight(i, j);
-						Vector3[] deltaVertices = new Vector3[vertexCount];
-						Vector3[] deltaNormals = new Vector3[vertexCount];
-						Vector3[] deltaTangents = new Vector3[vertexCount];
-						mesh.GetBlendShapeFrameVertices(i, j, deltaVertices, deltaNormals, deltaTangents);
-						array2[j] = new MeshCombiner.BlendShapeFrame(blendShapeFrameWeight, deltaVertices, deltaNormals, deltaTangents);
+						Vector3[] array3 = new Vector3[vertexCount];
+						Vector3[] array4 = new Vector3[vertexCount];
+						Vector3[] array5 = new Vector3[vertexCount];
+						mesh.GetBlendShapeFrameVertices(i, j, array3, array4, array5);
+						array2[j] = new MeshCombiner.BlendShapeFrame(blendShapeFrameWeight, array3, array4, array5);
 					}
 					array[i] = new MeshCombiner.BlendShape(blendShapeName, array2);
 				}
@@ -1157,7 +1155,7 @@ namespace BrainFailProductions.PolyFewRuntime
 					throw new ArgumentNullException("indices");
 				}
 				Vector2Int[] array = new Vector2Int[indices.Length];
-				indexFormat = IndexFormat.UInt16;
+				indexFormat = 0;
 				for (int i = 0; i < indices.Length; i++)
 				{
 					int num;
@@ -1166,7 +1164,7 @@ namespace BrainFailProductions.PolyFewRuntime
 					array[i] = new Vector2Int(num, num2);
 					if (num2 - num > 65535)
 					{
-						indexFormat = IndexFormat.UInt32;
+						indexFormat = 1;
 					}
 				}
 				return array;

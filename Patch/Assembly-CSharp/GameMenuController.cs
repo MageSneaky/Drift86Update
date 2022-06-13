@@ -5,7 +5,7 @@ public class GameMenuController : MonoBehaviour
 {
 	private void Start()
 	{
-		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
+		Object.DontDestroyOnLoad(base.gameObject);
 	}
 
 	private void Update()

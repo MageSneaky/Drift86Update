@@ -18,7 +18,7 @@ public class MessageBox : MonoBehaviour
 	{
 		if (!Application.isPlaying)
 		{
-			UnityEngine.Object.DestroyImmediate(base.gameObject);
+			Object.DestroyImmediate(base.gameObject);
 		}
 		this.ApplyButton.onClick.AddListener(new UnityAction(this.OnApply));
 		this.CancelButton.onClick.AddListener(new UnityAction(this.OnCancel));
@@ -26,13 +26,13 @@ public class MessageBox : MonoBehaviour
 
 	public static void Show(string message)
 	{
-		MessageBox.ActiveMessageBox = UnityEngine.Object.Instantiate<MessageBox>(B.ResourcesSettings.MessageBox);
+		MessageBox.ActiveMessageBox = Object.Instantiate<MessageBox>(B.ResourcesSettings.MessageBox);
 		MessageBox.ActiveMessageBox.Init(message, null, null, "Apply", "OK");
 	}
 
 	public static void Show(string message, Action applyAction, Action cancelAction, string applyButtonText = "Apply", string cancelButtonText = "OK")
 	{
-		MessageBox.ActiveMessageBox = UnityEngine.Object.Instantiate<MessageBox>(B.ResourcesSettings.MessageBox);
+		MessageBox.ActiveMessageBox = Object.Instantiate<MessageBox>(B.ResourcesSettings.MessageBox);
 		MessageBox.ActiveMessageBox.Init(message, applyAction, cancelAction, applyButtonText, cancelButtonText);
 	}
 
@@ -50,13 +50,13 @@ public class MessageBox : MonoBehaviour
 	public void OnApply()
 	{
 		this.ApplyAction.SafeInvoke();
-		UnityEngine.Object.Destroy(base.gameObject);
+		Object.Destroy(base.gameObject);
 	}
 
 	public void OnCancel()
 	{
 		this.CancelAction.SafeInvoke();
-		UnityEngine.Object.Destroy(base.gameObject);
+		Object.Destroy(base.gameObject);
 	}
 
 	[SerializeField]

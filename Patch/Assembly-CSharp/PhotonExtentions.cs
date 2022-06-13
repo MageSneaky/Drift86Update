@@ -6,13 +6,9 @@ public static class PhotonExtentions
 {
 	public static void SetCustomProperties(this Player player, object key, object value)
 	{
-		player.SetCustomProperties(new Hashtable
-		{
-			{
-				key,
-				value
-			}
-		}, null, null);
+		Hashtable hashtable = new Hashtable();
+		hashtable.Add(key, value);
+		player.SetCustomProperties(hashtable, null, null);
 	}
 
 	public static void SetCustomProperties(this Player player, params object[] args)

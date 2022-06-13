@@ -14,11 +14,11 @@ namespace SpielmannSpiel_Launcher
 			switch (this.userDefinedFullScreenMode)
 			{
 			case LauncherManager.FullScreenModeEn._MaximizedWindow:
-				return FullScreenMode.MaximizedWindow;
+				return 2;
 			case LauncherManager.FullScreenModeEn._ExclusiveFullScreen:
-				return FullScreenMode.ExclusiveFullScreen;
+				return 0;
 			}
-			return FullScreenMode.FullScreenWindow;
+			return 1;
 		}
 
 		private void Reset()
@@ -83,7 +83,8 @@ namespace SpielmannSpiel_Launcher
 			if (this.dropdownResolution != null)
 			{
 				this.dropdownResolution.ClearOptions();
-				Vector2 lhs = new Vector2((float)Screen.currentResolution.width, (float)Screen.currentResolution.height);
+				Vector2 vector;
+				vector..ctor((float)Screen.currentResolution.width, (float)Screen.currentResolution.height);
 				int value = 0;
 				for (int j = 0; j < this.resolutions.Count; j++)
 				{
@@ -91,7 +92,7 @@ namespace SpielmannSpiel_Launcher
 					{
 						text = this.resolutions[j].label
 					});
-					if (lhs == this.resolutions[j].size)
+					if (vector == this.resolutions[j].size)
 					{
 						value = j;
 					}
@@ -164,7 +165,7 @@ namespace SpielmannSpiel_Launcher
 				if (!flag)
 				{
 					Debug.Log("FullScreenMode: Screen.fullScreen " + flag2.ToString());
-					if (flag7 && this.getFullScreenMode() == FullScreenMode.ExclusiveFullScreen)
+					if (flag7 && this.getFullScreenMode() == null)
 					{
 						Screen.SetResolution(8, 6, this.getFullScreenMode());
 					}
@@ -185,7 +186,7 @@ namespace SpielmannSpiel_Launcher
 				else
 				{
 					Debug.Log("FullScreenMode: FullScreenMode.Windowed");
-					Screen.SetResolution(resolutionInfo.resolution.width, resolutionInfo.resolution.height, FullScreenMode.Windowed);
+					Screen.SetResolution(resolutionInfo.resolution.width, resolutionInfo.resolution.height, 3);
 				}
 				PlayerPrefs.SetInt(this.playerPrefsPrefix + "resolutionIndex", this.dropdownResolution.value);
 			}
@@ -230,21 +231,21 @@ namespace SpielmannSpiel_Launcher
 			float value = this.shadowResolutionSlider.value;
 			if (0f.Equals(value))
 			{
-				QualitySettings.shadowResolution = ShadowResolution.Low;
+				QualitySettings.shadowResolution = 0;
 				this.shadowText.text = "Shadow Resolution (Low)";
 				PlayerPrefs.SetInt("SaveShadowRes", 0);
 				return;
 			}
 			if (1f.Equals(value))
 			{
-				QualitySettings.shadowResolution = ShadowResolution.Medium;
+				QualitySettings.shadowResolution = 1;
 				this.shadowText.text = "Shadow Resolution (Medium)";
 				PlayerPrefs.SetInt("SaveShadowRes", 1);
 				return;
 			}
 			if (2f.Equals(value))
 			{
-				QualitySettings.shadowResolution = ShadowResolution.High;
+				QualitySettings.shadowResolution = 2;
 				this.shadowText.text = "Shadow Resolution (High)";
 				PlayerPrefs.SetInt("SaveShadowRes", 2);
 				return;
@@ -253,7 +254,7 @@ namespace SpielmannSpiel_Launcher
 			{
 				return;
 			}
-			QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
+			QualitySettings.shadowResolution = 3;
 			this.shadowText.text = "Shadow Resolution (Ultra)";
 			PlayerPrefs.SetInt("SaveShadowRes", 3);
 		}
@@ -270,16 +271,16 @@ namespace SpielmannSpiel_Launcher
 			switch (LOL)
 			{
 			case 0:
-				QualitySettings.shadowResolution = ShadowResolution.Low;
+				QualitySettings.shadowResolution = 0;
 				return;
 			case 1:
-				QualitySettings.shadowResolution = ShadowResolution.Medium;
+				QualitySettings.shadowResolution = 1;
 				return;
 			case 2:
-				QualitySettings.shadowResolution = ShadowResolution.High;
+				QualitySettings.shadowResolution = 2;
 				return;
 			case 3:
-				QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
+				QualitySettings.shadowResolution = 3;
 				return;
 			default:
 				return;
@@ -303,7 +304,7 @@ namespace SpielmannSpiel_Launcher
 				}
 				else
 				{
-					QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
+					QualitySettings.shadowResolution = 3;
 					PlayerPrefs.SetInt("SaveShadowRes", 3);
 					Debug.Log("PASSAGE ICI : set sur 3");
 				}
@@ -357,7 +358,7 @@ namespace SpielmannSpiel_Launcher
 		public void start()
 		{
 			this.activateSettings();
-			SceneManager.LoadSceneAsync(this.loadNextSceneName, LoadSceneMode.Single);
+			SceneManager.LoadSceneAsync(this.loadNextSceneName, 0);
 		}
 
 		public void quit()

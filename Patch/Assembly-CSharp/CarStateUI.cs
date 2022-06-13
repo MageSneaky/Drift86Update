@@ -33,8 +33,8 @@ public class CarStateUI : MonoBehaviour
 	private void UpdateArrow()
 	{
 		float num = this.SelectedCar.EngineRPM / this.SelectedCar.GetMaxRPM;
-		float angle = (this.MaxArrowAngle - this.MinArrowAngle) * num + this.MinArrowAngle;
-		this.TahometerArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		float num2 = (this.MaxArrowAngle - this.MinArrowAngle) * num + this.MinArrowAngle;
+		this.TahometerArrow.rotation = Quaternion.AngleAxis(num2, Vector3.forward);
 	}
 
 	private void UpdateGamePanel()

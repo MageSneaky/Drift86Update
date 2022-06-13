@@ -6,7 +6,6 @@ using GameBalance;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PersitanteRoomListUI : MonoBehaviourPunCallbacks
@@ -56,7 +55,7 @@ public class PersitanteRoomListUI : MonoBehaviourPunCallbacks
 		if (PhotonNetwork.InLobby && this.playercountx < this.Maxplayerr)
 		{
 			ObscuredPrefs.SetString("MYROOM", this.RoomName);
-			UnityEngine.Object.FindObjectOfType<SI_PersistantLobby>().DisableAllBtn();
+			Object.FindObjectOfType<SI_PersistantLobby>().DisableAllBtn();
 			base.StartCoroutine(this.GoMap());
 			return;
 		}
@@ -76,7 +75,7 @@ public class PersitanteRoomListUI : MonoBehaviourPunCallbacks
 		yield return new WaitForSeconds(1f);
 		Debug.Log("STARTING...");
 		WorldLoading.IsMultiplayer = true;
-		LoadingScreenUI.LoadScene(WorldLoading.LoadingTrack.SceneName + " - Persistant", LoadSceneMode.Single);
+		LoadingScreenUI.LoadScene(WorldLoading.LoadingTrack.SceneName + " - Persistant", 0);
 		yield break;
 	}
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace AsImpL
 {
@@ -33,13 +32,13 @@ namespace AsImpL
 			this.currMaterials = new Dictionary<string, Material>();
 			if (materialData == null || materialData.Count == 0)
 			{
-				string name = "VertexLit";
+				string text = "VertexLit";
 				if (hasColors)
 				{
-					name = "Unlit/Simple Vertex Colors Shader";
-					if (Shader.Find(name) == null)
+					text = "Unlit/Simple Vertex Colors Shader";
+					if (Shader.Find(text) == null)
 					{
-						name = "Mobile/Particles/Alpha Blended";
+						text = "Mobile/Particles/Alpha Blended";
 					}
 					Debug.Log("No material library defined. Using vertex colors.");
 				}
@@ -47,7 +46,7 @@ namespace AsImpL
 				{
 					Debug.LogWarning("No material library defined. Using a default material.");
 				}
-				this.currMaterials.Add("default", new Material(Shader.Find(name)));
+				this.currMaterials.Add("default", new Material(Shader.Find(text)));
 			}
 		}
 
@@ -172,25 +171,27 @@ namespace AsImpL
 				float num16 = vector5.y - vector4.y;
 				float num17 = vector6.y - vector4.y;
 				float num18 = 1f / (num14 * num17 - num15 * num16);
-				Vector3 b = new Vector3((num17 * num8 - num16 * num9) * num18, (num17 * num10 - num16 * num11) * num18, (num17 * num12 - num16 * num13) * num18);
-				Vector3 b2 = new Vector3((num14 * num9 - num15 * num8) * num18, (num14 * num11 - num15 * num10) * num18, (num14 * num13 - num15 * num12) * num18);
-				array2[num5] += b;
-				array2[num6] += b;
-				array2[num7] += b;
-				array3[num5] += b2;
-				array3[num6] += b2;
-				array3[num7] += b2;
+				Vector3 vector7;
+				vector7..ctor((num17 * num8 - num16 * num9) * num18, (num17 * num10 - num16 * num11) * num18, (num17 * num12 - num16 * num13) * num18);
+				Vector3 vector8;
+				vector8..ctor((num14 * num9 - num15 * num8) * num18, (num14 * num11 - num15 * num10) * num18, (num14 * num13 - num15 * num12) * num18);
+				array2[num5] += vector7;
+				array2[num6] += vector7;
+				array2[num7] += vector7;
+				array3[num5] += vector8;
+				array3[num6] += vector8;
+				array3[num7] += vector8;
 				num4 += 3;
 			}
 			for (int k = 0; k < vertexCount; k++)
 			{
-				Vector3 lhs = normals[k];
-				Vector3 vector7 = array2[k];
-				Vector3.OrthoNormalize(ref lhs, ref vector7);
-				array[k].x = vector7.x;
-				array[k].y = vector7.y;
-				array[k].z = vector7.z;
-				array[k].w = ((Vector3.Dot(Vector3.Cross(lhs, vector7), array3[k]) < 0f) ? -1f : 1f);
+				Vector3 vector9 = normals[k];
+				Vector3 vector10 = array2[k];
+				Vector3.OrthoNormalize(ref vector9, ref vector10);
+				array[k].x = vector10.x;
+				array[k].y = vector10.y;
+				array[k].z = vector10.z;
+				array[k].w = ((Vector3.Dot(Vector3.Cross(vector9, vector10), array3[k]) < 0f) ? -1f : 1f);
 			}
 			origMesh.tangents = array;
 		}
@@ -404,7 +405,7 @@ namespace AsImpL
 			Mesh mesh = new Mesh();
 			if (this.Using32bitIndices() && (num4 > ObjectBuilder.MAX_VERT_COUNT || num6 > ObjectBuilder.MAX_INDICES_LIMIT_FOR_A_MESH))
 			{
-				mesh.indexFormat = IndexFormat.UInt32;
+				mesh.indexFormat = 1;
 			}
 			mesh.name = gameObject.name;
 			meshFilter.sharedMesh = mesh;
@@ -427,7 +428,7 @@ namespace AsImpL
 			{
 				Material sharedMaterial = mats[text];
 				component.sharedMaterial = sharedMaterial;
-				component.UpdateGIMaterials();
+				RendererExtensions.UpdateGIMaterials(component);
 			}
 			else if (mats.ContainsKey("default"))
 			{
@@ -470,7 +471,7 @@ namespace AsImpL
 
 		private Material BuildMaterial(MaterialData md)
 		{
-			string name = "Standard";
+			string text = "Standard";
 			bool flag = false;
 			ModelUtil.MtlBlendMode mode = (md.overallAlpha < 1f) ? ModelUtil.MtlBlendMode.TRANSPARENT : ModelUtil.MtlBlendMode.OPAQUE;
 			object obj = this.buildOptions != null && this.buildOptions.litDiffuse && md.diffuseTex != null && md.bumpTex == null && md.opacityTex == null && md.specularTex == null && !md.hasReflectionTex;
@@ -482,13 +483,13 @@ namespace AsImpL
 			}
 			if (obj2 != null && !flag2.Value)
 			{
-				name = "Unlit/Texture";
+				text = "Unlit/Texture";
 			}
 			else if (flag)
 			{
-				name = "Standard (Specular setup)";
+				text = "Standard (Specular setup)";
 			}
-			Material material = new Material(Shader.Find(name));
+			Material material = new Material(Shader.Find(text));
 			material.name = md.materialName;
 			float num = Mathf.Log(md.shininess, 2f);
 			float num2 = Mathf.Clamp01(num / 10f);
@@ -508,7 +509,7 @@ namespace AsImpL
 				{
 					int width = md.diffuseTex.width;
 					int width2 = md.diffuseTex.width;
-					Texture2D texture2D = new Texture2D(width, width2, TextureFormat.ARGB32, false);
+					Texture2D texture2D = new Texture2D(width, width2, 5, false);
 					Color color = default(Color);
 					for (int i = 0; i < texture2D.width; i++)
 					{
@@ -538,7 +539,7 @@ namespace AsImpL
 				mode = ModelUtil.MtlBlendMode.FADE;
 				int width3 = md.opacityTex.width;
 				int width4 = md.opacityTex.width;
-				Texture2D texture2D2 = new Texture2D(width3, width4, TextureFormat.ARGB32, false);
+				Texture2D texture2D2 = new Texture2D(width3, width4, 5, false);
 				Color color2 = default(Color);
 				bool flag3 = false;
 				for (int k = 0; k < texture2D2.width; k++)
@@ -573,19 +574,19 @@ namespace AsImpL
 				}
 				else
 				{
-					Texture2D value = ModelUtil.HeightToNormalMap(md.bumpTex, 1f);
-					material.SetTexture("_BumpMap", value);
+					Texture2D texture2D3 = ModelUtil.HeightToNormalMap(md.bumpTex, 1f);
+					material.SetTexture("_BumpMap", texture2D3);
 					material.EnableKeyword("_NORMALMAP");
 					material.SetFloat("_BumpScale", 1f);
 				}
 			}
 			if (md.specularTex != null)
 			{
-				Texture2D texture2D3 = new Texture2D(md.specularTex.width, md.specularTex.height, TextureFormat.ARGB32, false);
+				Texture2D texture2D4 = new Texture2D(md.specularTex.width, md.specularTex.height, 5, false);
 				Color color3 = default(Color);
-				for (int m = 0; m < texture2D3.width; m++)
+				for (int m = 0; m < texture2D4.width; m++)
 				{
-					for (int n = 0; n < texture2D3.height; n++)
+					for (int n = 0; n < texture2D4.height; n++)
 					{
 						float grayscale = md.specularTex.GetPixel(m, n).grayscale;
 						color3.r = num2 * grayscale;
@@ -599,19 +600,19 @@ namespace AsImpL
 						{
 							color3.a = grayscale * num3;
 						}
-						texture2D3.SetPixel(m, n, color3);
+						texture2D4.SetPixel(m, n, color3);
 					}
 				}
-				texture2D3.Apply();
+				texture2D4.Apply();
 				if (flag)
 				{
 					material.EnableKeyword("_SPECGLOSSMAP");
-					material.SetTexture("_SpecGlossMap", texture2D3);
+					material.SetTexture("_SpecGlossMap", texture2D4);
 				}
 				else
 				{
 					material.EnableKeyword("_METALLICGLOSSMAP");
-					material.SetTexture("_MetallicGlossMap", texture2D3);
+					material.SetTexture("_MetallicGlossMap", texture2D4);
 				}
 			}
 			if (md.hasReflectionTex)

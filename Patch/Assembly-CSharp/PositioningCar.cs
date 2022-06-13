@@ -85,16 +85,16 @@ public class PositioningCar : MonoBehaviour
 
 	private void UpdateProgress()
 	{
-		Vector3 lhs = this.ProgressPoint.position - base.transform.position;
-		float num = Vector3.Dot(lhs, this.ProgressPoint.direction);
+		Vector3 vector = this.ProgressPoint.position - base.transform.position;
+		float num = Vector3.Dot(vector, this.ProgressPoint.direction);
 		if (num < 0f)
 		{
 			while (num < 0f)
 			{
 				this.ProgressDistance += Mathf.Max(0.5f, this.CarController.CurrentSpeed * Time.fixedDeltaTime);
 				this.ProgressPoint = this.Circuit.GetRoutePoint(this.ProgressDistance);
-				lhs = this.ProgressPoint.position - base.transform.position;
-				num = Vector3.Dot(lhs, this.ProgressPoint.direction);
+				vector = this.ProgressPoint.position - base.transform.position;
+				num = Vector3.Dot(vector, this.ProgressPoint.direction);
 			}
 			this.DistanceToProgressPoint = (this.ProgressPoint.position - base.transform.position).magnitude;
 			if (this.ProgressDistance > this.LastCorrectProgressDistance)
@@ -108,12 +108,12 @@ public class PositioningCar : MonoBehaviour
 				return;
 			}
 		}
-		else if (this.ProgressDistance > 0f && (this.DistanceToProgressPoint + 10f) * (this.DistanceToProgressPoint + 10f) < lhs.sqrMagnitude)
+		else if (this.ProgressDistance > 0f && (this.DistanceToProgressPoint + 10f) * (this.DistanceToProgressPoint + 10f) < vector.sqrMagnitude)
 		{
-			num = Vector3.Dot(lhs, -this.ProgressPoint.direction);
+			num = Vector3.Dot(vector, -this.ProgressPoint.direction);
 			if (num < 0f)
 			{
-				this.ProgressDistance -= lhs.magnitude * 0.5f;
+				this.ProgressDistance -= vector.magnitude * 0.5f;
 				this.ProgressPoint = this.Circuit.GetRoutePoint(this.ProgressDistance);
 				this.IsWrongDirection = true;
 				this.DistanceToProgressPoint = (this.ProgressPoint.position - base.transform.position).magnitude;

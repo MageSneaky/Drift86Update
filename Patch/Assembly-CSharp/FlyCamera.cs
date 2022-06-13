@@ -33,17 +33,18 @@ public class FlyCamera : MonoBehaviour
 			this.x += num * this.xSpeed * this.distance * 0.02f;
 			this.y -= num2 * this.ySpeed * 0.02f;
 			this.y = FlyCamera.ClampAngle(this.y, this.yMinLimit, this.yMaxLimit);
-			Quaternion rotation = Quaternion.Euler(this.y, this.x, 0f);
+			Quaternion quaternion = Quaternion.Euler(this.y, this.x, 0f);
 			this.distance = Mathf.Clamp(this.distance - Input.GetAxis("Mouse ScrollWheel") * 5f, this.distanceMin, this.distanceMax);
 			RaycastHit raycastHit;
-			if (Physics.Linecast(this.target.position, base.transform.position, out raycastHit))
+			if (Physics.Linecast(this.target.position, base.transform.position, ref raycastHit))
 			{
 				this.distance -= raycastHit.distance;
 			}
-			Vector3 point = new Vector3(0f, 0f, -this.distance);
-			Vector3 position = rotation * point + this.target.position;
+			Vector3 vector;
+			vector..ctor(0f, 0f, -this.distance);
+			Vector3 position = quaternion * vector + this.target.position;
 			base.transform.position = position;
-			base.transform.rotation = rotation;
+			base.transform.rotation = quaternion;
 		}
 	}
 

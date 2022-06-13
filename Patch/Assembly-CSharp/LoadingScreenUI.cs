@@ -49,7 +49,7 @@ public class LoadingScreenUI : MonoBehaviour
 				timer -= Time.deltaTime;
 				yield return null;
 			}
-			UnityEngine.Object.Destroy(base.gameObject);
+			Object.Destroy(base.gameObject);
 			LoadingScreenUI.Instance = null;
 		}
 		onCompleteAction.SafeInvoke();
@@ -58,7 +58,7 @@ public class LoadingScreenUI : MonoBehaviour
 
 	public static bool IsLoaded { get; private set; }
 
-	public static void LoadScene(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
+	public static void LoadScene(string sceneName, LoadSceneMode mode = 0)
 	{
 		if (LoadingScreenUI.Instance != null)
 		{
@@ -66,8 +66,8 @@ public class LoadingScreenUI : MonoBehaviour
 			return;
 		}
 		LoadingScreenUI.IsLoaded = false;
-		LoadingScreenUI.Instance = UnityEngine.Object.Instantiate<LoadingScreenUI>(B.ResourcesSettings.LoadingScreenUI);
-		UnityEngine.Object.DontDestroyOnLoad(LoadingScreenUI.Instance);
+		LoadingScreenUI.Instance = Object.Instantiate<LoadingScreenUI>(B.ResourcesSettings.LoadingScreenUI);
+		Object.DontDestroyOnLoad(LoadingScreenUI.Instance);
 		if (sceneName == "DriftRegimeScene")
 		{
 			AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("FreeDriftRegimeScenePort", mode);
@@ -88,15 +88,15 @@ public class LoadingScreenUI : MonoBehaviour
 			return;
 		}
 		LoadingScreenUI.IsLoaded = false;
-		LoadingScreenUI.Instance = UnityEngine.Object.Instantiate<LoadingScreenUI>(B.ResourcesSettings.LoadingScreenUI);
-		UnityEngine.Object.DontDestroyOnLoad(LoadingScreenUI.Instance);
+		LoadingScreenUI.Instance = Object.Instantiate<LoadingScreenUI>(B.ResourcesSettings.LoadingScreenUI);
+		Object.DontDestroyOnLoad(LoadingScreenUI.Instance);
 		LoadingScreenUI.CurrentLevelName = sceneName;
 		LoadingScreenUI.CurrentRegimeSceneName = regimeSceneName;
-		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+		AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, 0);
 		asyncOperation.allowSceneActivation = false;
 		Action onCompleteAction = delegate()
 		{
-			asyncOperation = SceneManager.LoadSceneAsync(regimeSceneName, LoadSceneMode.Additive);
+			asyncOperation = SceneManager.LoadSceneAsync(regimeSceneName, 1);
 			asyncOperation.allowSceneActivation = false;
 			LoadingScreenUI.Instance.StartCoroutine(LoadingScreenUI.Instance.LoadSceneCoroutine(asyncOperation, 0.7f, 0.3f, true, null));
 		};

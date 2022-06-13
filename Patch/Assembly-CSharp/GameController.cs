@@ -76,7 +76,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 		{
 			Debug.Log("LOADING WSH");
 			WorldLoading.RegimeForDebug = this.RegimeForDebug;
-			LoadingScreenUI.LoadScene(this.RegimeForDebug.RegimeSceneName, LoadSceneMode.Additive);
+			LoadingScreenUI.LoadScene(this.RegimeForDebug.RegimeSceneName, 1);
 			Debug.Log("LOADING WSH");
 		}
 		GameController.Instance = this;
@@ -85,7 +85,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 			this.m_GameIsEnded = true;
 		}));
 		base.StartCoroutine(this.StartRaceCoroutine());
-		foreach (CarController carController in UnityEngine.Object.FindObjectsOfType<CarController>())
+		foreach (CarController carController in Object.FindObjectsOfType<CarController>())
 		{
 			if (carController.GetComponent<UserControl>() != null)
 			{
@@ -109,14 +109,14 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 			AudioListener component = carController2.GetComponent<AudioListener>();
 			if (component != null)
 			{
-				UnityEngine.Object.Destroy(component);
+				Object.Destroy(component);
 			}
 		}
 		if (WorldLoading.IsMultiplayer)
 		{
 			this.m_AllCars.ForEach(delegate(CarController c)
 			{
-				UnityEngine.Object.Destroy(c.gameObject);
+				Object.Destroy(c.gameObject);
 			});
 			this.m_AllCars.Clear();
 			this.InitRaceEntity();
@@ -151,10 +151,10 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 		}
 		this.m_AllCars.ForEach(delegate(CarController c)
 		{
-			UnityEngine.Object.Destroy(c.gameObject);
+			Object.Destroy(c.gameObject);
 		});
 		this.m_AllCars.Clear();
-		this.m_PlayerCar = UnityEngine.Object.Instantiate<CarController>(WorldLoading.PlayerCar.CarPrefab);
+		this.m_PlayerCar = Object.Instantiate<CarController>(WorldLoading.PlayerCar.CarPrefab);
 		if (this.m_PlayerCar.GetComponent<UserControl>() == null)
 		{
 			this.m_PlayerCar.gameObject.AddComponent<UserControl>();
@@ -164,19 +164,19 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 		for (int j = 0; j < WorldLoading.AIsCount; j++)
 		{
 			CarPreset carPreset = WorldLoading.AvailableCars.RandomChoice<CarPreset>();
-			CarController carController4 = UnityEngine.Object.Instantiate<CarController>(carPreset.CarPrefab);
+			CarController carController4 = Object.Instantiate<CarController>(carPreset.CarPrefab);
 			carController4.gameObject.AddComponent<DriftAIControl>();
 			UserControl component2 = carController4.GetComponent<UserControl>();
 			if (component2 != null)
 			{
-				UnityEngine.Object.Destroy(component2);
+				Object.Destroy(component2);
 			}
 			carController4.SetColor(carPreset.GetRandomColor());
 			this.m_AllCars.Add(carController4);
 		}
 		for (int k = 0; k < this.m_AllCars.Count; k++)
 		{
-			int index = UnityEngine.Random.Range(0, this.m_AllCars.Count);
+			int index = Random.Range(0, this.m_AllCars.Count);
 			CarController value = this.m_AllCars[k];
 			this.m_AllCars[k] = this.m_AllCars[index];
 			this.m_AllCars[index] = value;
@@ -226,7 +226,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 		{
 			yield return null;
 		}
-		UnityEngine.Object.Instantiate<GameObject>(this.CountdownObject).SetActive(true);
+		Object.Instantiate<GameObject>(this.CountdownObject).SetActive(true);
 		yield return new WaitForSeconds(this.CountdownTime);
 		this.OnStartRaceAction.SafeInvoke();
 		this.m_RaceIsStarted = true;
@@ -244,9 +244,9 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 			SteamUserStats.SetAchievement("Play_Multi");
 			SteamSettings.Client.StoreStatsAndAchievements();
 		}
-		if (UnityEngine.Object.FindObjectOfType<UserControl>() && array.Length >= 1)
+		if (Object.FindObjectOfType<UserControl>() && array.Length >= 1)
 		{
-			SteamUserStats.SetAchievement(UnityEngine.Object.FindObjectOfType<UserControl>().gameObject.transform.name.Split(new char[]
+			SteamUserStats.SetAchievement(Object.FindObjectOfType<UserControl>().gameObject.transform.name.Split(new char[]
 			{
 				'('
 			})[0]);
@@ -304,7 +304,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 	{
 		PhotonNetwork.RaiseEvent(1, null, new RaiseEventOptions
 		{
-			Receivers = ReceiverGroup.All
+			Receivers = 1
 		}, SendOptions.SendReliable);
 	}
 
@@ -328,7 +328,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 	private IEnumerator StartFinishRaceTimer()
 	{
 		int timer = B.MultiplayerSettings.SecondsToEndGame;
-		GameObject endGameTimerHolder = UnityEngine.Object.Instantiate<GameObject>(this.EndGameTimerHolder);
+		GameObject endGameTimerHolder = Object.Instantiate<GameObject>(this.EndGameTimerHolder);
 		endGameTimerHolder.SetActive(true);
 		TextMeshProUGUI endGameTimerText = endGameTimerHolder.GetComponentInChildren<TextMeshProUGUI>();
 		while (timer >= 0)
@@ -372,7 +372,7 @@ public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
 	{
 		Action action = delegate()
 		{
-			LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, LoadSceneMode.Single);
+			LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, 0);
 		};
 		B.MultiplayerSettings.ShowDisconnectCause(cause, null);
 	}

@@ -7,7 +7,7 @@ namespace Photon.Chat.UtilityScripts
 	{
 		private void Start()
 		{
-			UnityEngine.Object.Destroy(base.gameObject);
+			Object.Destroy(base.gameObject);
 		}
 	}
 }

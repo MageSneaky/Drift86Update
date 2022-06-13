@@ -14,7 +14,7 @@ namespace UnityStandardAssets.ImageEffects
 				if (Blur.m_Material == null)
 				{
 					Blur.m_Material = new Material(this.blurShader);
-					Blur.m_Material.hideFlags = HideFlags.DontSave;
+					Blur.m_Material.hideFlags = 52;
 				}
 				return Blur.m_Material;
 			}
@@ -24,7 +24,7 @@ namespace UnityStandardAssets.ImageEffects
 		{
 			if (Blur.m_Material)
 			{
-				UnityEngine.Object.DestroyImmediate(Blur.m_Material);
+				Object.DestroyImmediate(Blur.m_Material);
 			}
 		}
 
@@ -68,13 +68,13 @@ namespace UnityStandardAssets.ImageEffects
 
 		private void OnRenderImage(RenderTexture source, RenderTexture destination)
 		{
-			int width = source.width / 4;
-			int height = source.height / 4;
-			RenderTexture renderTexture = RenderTexture.GetTemporary(width, height, 0);
+			int num = source.width / 4;
+			int num2 = source.height / 4;
+			RenderTexture renderTexture = RenderTexture.GetTemporary(num, num2, 0);
 			this.DownSample4x(source, renderTexture);
 			for (int i = 0; i < this.iterations; i++)
 			{
-				RenderTexture temporary = RenderTexture.GetTemporary(width, height, 0);
+				RenderTexture temporary = RenderTexture.GetTemporary(num, num2, 0);
 				this.FourTapCone(renderTexture, temporary, i);
 				RenderTexture.ReleaseTemporary(renderTexture);
 				renderTexture = temporary;

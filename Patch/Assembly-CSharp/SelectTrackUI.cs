@@ -127,20 +127,22 @@ public class SelectTrackUI : WindowWithShopLogic
 		{
 			WaypointCircuit.RoutePoint routePoint = getPathForVisual.GetRoutePoint(num);
 			num += this.PathStep;
-			Vector3 item = new Vector3(routePoint.position.x, routePoint.position.z, routePoint.position.y);
+			Vector3 item;
+			item..ctor(routePoint.position.x, routePoint.position.z, routePoint.position.y);
 			list.Add(item);
 			num2++;
 		}
-		float a = list.Max((Vector3 p) => p.x.Abs());
-		float b = list.Max((Vector3 p) => p.y.Abs());
-		float num3 = Mathf.Max(a, b);
-		num3 = this.MaxRadius / num3;
-		float x = list.Min((Vector3 p) => p.x);
-		float y = list.Min((Vector3 p) => p.y);
-		Vector3 b2 = new Vector3(x, y, 0f);
+		float num3 = list.Max((Vector3 p) => p.x.Abs());
+		float num4 = list.Max((Vector3 p) => p.y.Abs());
+		float num5 = Mathf.Max(num3, num4);
+		num5 = this.MaxRadius / num5;
+		float num6 = list.Min((Vector3 p) => p.x);
+		float num7 = list.Min((Vector3 p) => p.y);
+		Vector3 vector;
+		vector..ctor(num6, num7, 0f);
 		for (int i = 0; i < this.TrackPath.positionCount; i++)
 		{
-			this.TrackPath.SetPosition(i, (list[i] - b2) * num3);
+			this.TrackPath.SetPosition(i, (list[i] - vector) * num5);
 		}
 	}
 

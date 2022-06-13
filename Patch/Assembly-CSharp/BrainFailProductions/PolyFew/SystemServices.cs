@@ -548,21 +548,21 @@ namespace BrainFailProductions.PolyFew
 				switch (format)
 				{
 				case SystemServices.ImageFormat.PNG:
-					data = texture.EncodeToPNG();
+					data = ImageConversion.EncodeToPNG(texture);
 					if (!fileName.ToLower().Contains(".png"))
 					{
 						fileName += ".png";
 					}
 					break;
 				case SystemServices.ImageFormat.JPG:
-					data = texture.EncodeToJPG();
+					data = ImageConversion.EncodeToJPG(texture);
 					if (!fileName.ToLower().Contains(".jpg"))
 					{
 						fileName += ".jpg";
 					}
 					break;
 				case SystemServices.ImageFormat.EXR:
-					data = texture.EncodeToEXR();
+					data = ImageConversion.EncodeToEXR(texture);
 					if (!fileName.ToLower().Contains(".exr"))
 					{
 						fileName += ".exr";

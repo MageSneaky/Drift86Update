@@ -1,6 +1,5 @@
 ﻿using System;
 using HeathenEngineering.SteamAPI;
-using Steamworks;
 using UnityEngine;
 
 public class SI_LBManager : MonoBehaviour
@@ -15,7 +14,7 @@ public class SI_LBManager : MonoBehaviour
 
 	public void SendScore()
 	{
-		this.totaldriftscore.UploadScore(PlayerProfile.TotalScore, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, null);
+		this.totaldriftscore.UploadScore(PlayerProfile.TotalScore, 1, null);
 		if (PlayerProfile.BestScoreCar == "eg86")
 		{
 			this.vehiculeUsed = 1;
@@ -188,9 +187,9 @@ public class SI_LBManager : MonoBehaviour
 		{
 			this.vehiculeUsed
 		};
-		this.bestdriftscore.UploadScore(PlayerProfile.BestScore, array, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, null);
+		this.bestdriftscore.UploadScore(PlayerProfile.BestScore, array, 1, null);
 		Debug.Log("UPLAOD  de : " + array[0]);
-		this.totaldistance.UploadScore((int)PlayerProfile.TotalDistance, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, null);
+		this.totaldistance.UploadScore((int)PlayerProfile.TotalDistance, 1, null);
 	}
 
 	public void CloseDisplayLB()

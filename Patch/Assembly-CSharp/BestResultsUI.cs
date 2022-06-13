@@ -23,7 +23,7 @@ public class BestResultsUI : WindowWithShowHideAnimators
 		this.BestRaceTimeText.text = PlayerProfile.RaceTime.ToStringTime();
 		this.TotalDistanceText.text = num.ToString();
 		this.CheckForSuccess();
-		UnityEngine.Object.FindObjectOfType<SI_LBManager>().SendScore();
+		Object.FindObjectOfType<SI_LBManager>().SendScore();
 		this.RankBestTotalScoreText.text = this.totaldriftscore.userEntry.Rank.ToString();
 		this.RankBestScoreText.text = this.bestdriftscore.userEntry.Rank.ToString();
 		this.RankTotalDistanceText.text = this.totaldistance.userEntry.Rank.ToString();
@@ -31,15 +31,15 @@ public class BestResultsUI : WindowWithShowHideAnimators
 
 	public void Start()
 	{
-		this.MyFace = UnityEngine.Object.FindObjectOfType<SI_GetUserData>().MyAvatar;
+		this.MyFace = Object.FindObjectOfType<SI_GetUserData>().MyAvatar;
 		this.MyFaceUI.texture = this.MyFace;
-		this.MyName = UnityEngine.Object.FindObjectOfType<SI_GetUserData>().playername;
+		this.MyName = Object.FindObjectOfType<SI_GetUserData>().playername;
 		this.MyNameUI.text = this.MyName;
 	}
 
 	public void UUpdateScore()
 	{
-		UnityEngine.Object.FindObjectOfType<SI_LBManager>().UpdateScore();
+		Object.FindObjectOfType<SI_LBManager>().UpdateScore();
 	}
 
 	public void CheckForSuccess()

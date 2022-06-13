@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameMenu : MonoBehaviour
@@ -45,7 +44,7 @@ public class InGameMenu : MonoBehaviour
 
 	private void Update()
 	{
-		if (this.Windows.CurrentWindow == null && !this.InGameMainMenu.gameObject.activeInHierarchy && !GameController.RaceIsEnded && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7)))
+		if (this.Windows.CurrentWindow == null && !this.InGameMainMenu.gameObject.activeInHierarchy && !GameController.RaceIsEnded && (Input.GetKeyDown(27) || Input.GetKeyDown(357)))
 		{
 			this.Show();
 			this.ContinueButton.Select();
@@ -71,6 +70,7 @@ public class InGameMenu : MonoBehaviour
 	private void Show()
 	{
 		Cursor.visible = true;
+		Cursor.lockState = 0;
 		this.BlockerImage.SetActive(true);
 		this.Windows.OpenWindow(this.InGameMainMenu);
 		this.SetTimeScale(0f);
@@ -83,6 +83,7 @@ public class InGameMenu : MonoBehaviour
 			return;
 		}
 		Cursor.visible = false;
+		SneakyManager.mouseFree = false;
 		this.BlockerImage.SetActive(false);
 		this.SetTimeScale(1f);
 	}
@@ -102,7 +103,7 @@ public class InGameMenu : MonoBehaviour
 	{
 		this.SetTimeScale(1f);
 		GameController.LeaveRoom();
-		LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, LoadSceneMode.Single);
+		LoadingScreenUI.LoadScene(B.GameSettings.MainMenuSceneName, 0);
 	}
 
 	[SerializeField]

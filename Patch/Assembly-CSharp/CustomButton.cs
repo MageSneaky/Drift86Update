@@ -23,7 +23,7 @@ public class CustomButton : Button
 		if (Application.isMobilePlatform)
 		{
 			Navigation navigation = base.navigation;
-			navigation.mode = Navigation.Mode.None;
+			navigation.mode = 0;
 			base.navigation = navigation;
 		}
 		base.Awake();
@@ -31,7 +31,7 @@ public class CustomButton : Button
 
 	protected override void OnEnable()
 	{
-		if (this.SelectedOnStart && base.navigation.mode != Navigation.Mode.None)
+		if (this.SelectedOnStart && base.navigation.mode != null)
 		{
 			base.StartCoroutine(this.DoSelect());
 		}

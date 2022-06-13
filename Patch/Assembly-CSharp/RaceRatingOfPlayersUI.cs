@@ -50,7 +50,7 @@ public class RaceRatingOfPlayersUI : MonoBehaviour
 		{
 			if (!this.PanelCarStatisticsDict.ContainsKey(key))
 			{
-				RaceRatingPlayerUI raceRatingPlayerUI = UnityEngine.Object.Instantiate<RaceRatingPlayerUI>(this.PlayerUIRef, this.PlayerUIRef.transform.parent);
+				RaceRatingPlayerUI raceRatingPlayerUI = Object.Instantiate<RaceRatingPlayerUI>(this.PlayerUIRef, this.PlayerUIRef.transform.parent);
 				raceRatingPlayerUI.SetActive(true);
 				this.PanelCarStatisticsDict.Add(key, raceRatingPlayerUI);
 			}

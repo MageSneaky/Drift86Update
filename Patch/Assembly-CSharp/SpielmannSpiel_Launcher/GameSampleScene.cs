@@ -22,12 +22,12 @@ namespace SpielmannSpiel_Launcher
 
 		public void back()
 		{
-			SceneManager.LoadScene(0, LoadSceneMode.Single);
+			SceneManager.LoadScene(0, 0);
 		}
 
 		public void loadExitScene()
 		{
-			SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1, LoadSceneMode.Single);
+			SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1, 0);
 		}
 
 		public void quit()

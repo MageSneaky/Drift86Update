@@ -7,7 +7,7 @@ public class NamePickGui : MonoBehaviour
 {
 	public void Start()
 	{
-		this.chatNewComponent = UnityEngine.Object.FindObjectOfType<ChatGui>();
+		this.chatNewComponent = Object.FindObjectOfType<ChatGui>();
 		string @string = PlayerPrefs.GetString("NamePickUserName");
 		if (!string.IsNullOrEmpty(@string))
 		{
@@ -17,7 +17,7 @@ public class NamePickGui : MonoBehaviour
 
 	public void EndEditOnEnter()
 	{
-		if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+		if (Input.GetKey(13) || Input.GetKey(271))
 		{
 			this.StartChat();
 		}
@@ -25,8 +25,15 @@ public class NamePickGui : MonoBehaviour
 
 	public void StartChat()
 	{
-		ChatGui chatGui = UnityEngine.Object.FindObjectOfType<ChatGui>();
-		chatGui.UserName = PlayerPrefs.GetString("MyName");
+		ChatGui chatGui = Object.FindObjectOfType<ChatGui>();
+		if (PlayerPrefs.HasKey("DisplayName"))
+		{
+			chatGui.UserName = PlayerPrefs.GetString("DisplayName");
+		}
+		else
+		{
+			chatGui.UserName = PlayerPrefs.GetString("MyName");
+		}
 		chatGui.Connect();
 		base.enabled = false;
 		PlayerPrefs.SetString("NamePickUserName", chatGui.UserName);

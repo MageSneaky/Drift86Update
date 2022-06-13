@@ -40,7 +40,7 @@ public class MusicPlayer : MonoBehaviour
 	{
 		if (this.playRandomClips)
 		{
-			this.playlistIndex = UnityEngine.Random.Range(0, this.enabledTracks.Count);
+			this.playlistIndex = Random.Range(0, this.enabledTracks.Count);
 			return;
 		}
 		this.playlistIndex++;

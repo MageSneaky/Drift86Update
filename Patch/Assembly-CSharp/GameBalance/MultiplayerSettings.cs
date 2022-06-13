@@ -213,7 +213,7 @@ namespace GameBalance
 
 		public void ShowDisconnectCause(DisconnectCause cause, Action onCloseAction = null)
 		{
-			if (cause == DisconnectCause.DisconnectByClientLogic)
+			if (cause == 13)
 			{
 				onCloseAction.SafeInvoke();
 				return;
@@ -307,7 +307,7 @@ namespace GameBalance
 
 		[Space(10f)]
 		[SerializeField]
-		private KeyCode m_ShowNickNameCode = KeyCode.Tab;
+		private KeyCode m_ShowNickNameCode = 9;
 
 		[SerializeField]
 		private TextMeshPro m_NickNameInWorld;
@@ -326,15 +326,15 @@ namespace GameBalance
 		public Dictionary<DisconnectCause, string> DisconnectCauseStrings = new Dictionary<DisconnectCause, string>
 		{
 			{
-				DisconnectCause.ServerTimeout,
+				3,
 				"Server timeout"
 			},
 			{
-				DisconnectCause.MaxCcuReached,
+				10,
 				"Max CCU has reached, try connecting later."
 			},
 			{
-				DisconnectCause.ClientTimeout,
+				4,
 				"Client timeout"
 			}
 		};

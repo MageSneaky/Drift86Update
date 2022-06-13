@@ -9,15 +9,15 @@ public class ProjectorStabilizationTransform : MonoBehaviour
 		if (this.Car == null)
 		{
 			Debug.LogError("CarController not found in parent");
-			UnityEngine.Object.Destroy(base.gameObject);
+			Object.Destroy(base.gameObject);
 		}
 	}
 
 	private void Update()
 	{
-		Vector3 forward = this.Car.transform.TransformDirection(Vector3.forward);
-		forward.y = 0f;
-		base.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+		Vector3 vector = this.Car.transform.TransformDirection(Vector3.forward);
+		vector.y = 0f;
+		base.transform.rotation = Quaternion.LookRotation(vector, Vector3.up);
 	}
 
 	private CarController Car;

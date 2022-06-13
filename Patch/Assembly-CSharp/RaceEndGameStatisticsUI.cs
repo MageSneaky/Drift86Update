@@ -5,7 +5,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RaceEndGameStatisticsUI : MonoBehaviour
@@ -163,7 +162,7 @@ public class RaceEndGameStatisticsUI : MonoBehaviour
 
 	private void Exit()
 	{
-		LoadingScreenUI.LoadScene(this.MainMenuSceneName, LoadSceneMode.Single);
+		LoadingScreenUI.LoadScene(this.MainMenuSceneName, 0);
 	}
 
 	private void OnDestroy()

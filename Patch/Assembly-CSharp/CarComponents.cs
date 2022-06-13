@@ -35,13 +35,15 @@ public class CarComponents : MonoBehaviour
 		}
 		if (this.SpeedNeedle)
 		{
-			Vector3 b = new Vector3(this.SpeedEulers.x, this.SpeedEulers.y, Mathf.Lerp(this.SpeedNeedleRotateRange.x, this.SpeedNeedleRotateRange.y, this.rotateNeedles));
-			this.SpeedNeedle.localEulerAngles = Vector3.Lerp(this.SpeedNeedle.localEulerAngles, b, Time.deltaTime * this._NeedleSmoothing);
+			Vector3 vector;
+			vector..ctor(this.SpeedEulers.x, this.SpeedEulers.y, Mathf.Lerp(this.SpeedNeedleRotateRange.x, this.SpeedNeedleRotateRange.y, this.rotateNeedles));
+			this.SpeedNeedle.localEulerAngles = Vector3.Lerp(this.SpeedNeedle.localEulerAngles, vector, Time.deltaTime * this._NeedleSmoothing);
 		}
 		if (this.RpmNeedle)
 		{
-			Vector3 b2 = new Vector3(this.RpmdEulers.x, this.RpmdEulers.y, Mathf.Lerp(this.RpmNeedleRotateRange.x, this.RpmNeedleRotateRange.y, this.rotateNeedles));
-			this.RpmNeedle.localEulerAngles = Vector3.Lerp(this.RpmNeedle.localEulerAngles, b2, Time.deltaTime * this._NeedleSmoothing);
+			Vector3 vector2;
+			vector2..ctor(this.RpmdEulers.x, this.RpmdEulers.y, Mathf.Lerp(this.RpmNeedleRotateRange.x, this.RpmNeedleRotateRange.y, this.rotateNeedles));
+			this.RpmNeedle.localEulerAngles = Vector3.Lerp(this.RpmNeedle.localEulerAngles, vector2, Time.deltaTime * this._NeedleSmoothing);
 		}
 		if (this.steeringWheel != null)
 		{

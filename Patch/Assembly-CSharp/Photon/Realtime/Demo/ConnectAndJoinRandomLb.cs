@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ namespace Photon.Realtime.Demo
 	{
 		public void Start()
 		{
-			this.lbc = new LoadBalancingClient(ConnectionProtocol.Udp);
+			this.lbc = new LoadBalancingClient(0);
 			this.lbc.AppId = this.AppId;
 			this.lbc.AddCallbackTarget(this);
 			this.lbc.ConnectToNameServer();
