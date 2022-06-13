@@ -33,7 +33,7 @@ Simple. I changed source code to fix problems.
 ## Installation:
 #### Video Guide:
 <p align="center">
-	<a href="">
+	<a href="https://www.youtube.com/watch?v=3o4HBU8VqOE">
 	    <img alt="Video" src="https://sneaky.pink/drift86v.png" target="_blank" height=300">
 	</a>
 </p>
