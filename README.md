@@ -39,7 +39,7 @@ Simple. I changed source code to fix problems.
 </p>
 
 1. Download `D86.zip`
-2. Extract the zip file into a folder. Then drag the files into DEFAULT directory "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Drift86 V3"
+2. Extract the zip file into a folder. Then drag the files into DEFAULT directory `C:\\Program Files (x86)\\Steam\\steamapps\\common\\Drift86 V3`
 
 #### Disclaimer
 
