@@ -1,5 +1,9 @@
 
 # Drift86Update
+
+> **Warning**
+This version is currently NOT supported, a new version is in the making
+
 <p align="center">
   <a href="https://sneaky.pink">
     <img src="https://sneaky.pink/d86banner.png"></a>
