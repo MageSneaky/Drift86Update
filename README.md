@@ -6,7 +6,7 @@ This version is currently NOT supported, a new version is in the making
 
 <p align="center">
   <a href="https://sneaky.pink">
-    <img src="https://sneaky.pink/d86banner.png"></a>
+    <img src="https://sneaky.pink/images/d86banner.png"></a>
 </p>
 <p align="center">
 <a href="https://github.com/MageSneaky/Drift86Update/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/MageSneaky/Drift86Update/total?color=pink&label=Downloads&logo=github&style=flat-square"></a>
@@ -38,7 +38,7 @@ Simple. I changed source code to fix problems.
 #### Video Guide:
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=3o4HBU8VqOE">
-	    <img alt="Video" src="https://sneaky.pink/drift86v.png" target="_blank" height=300">
+	    <img alt="Video" src="https://sneaky.pink/images/drift86v.png" target="_blank" height=300">
 	</a>
 </p>
 
