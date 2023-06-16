@@ -2,7 +2,7 @@
 # Drift86Update
 
 > **Warning**
-This version is currently NOT supported, a new version is in the making
+This version is NOT supported, a new version can be found [HERE](https://github.com/MageSneaky/Drift86CE)
 
 <p align="center">
   <a href="https://sneaky.pink">
